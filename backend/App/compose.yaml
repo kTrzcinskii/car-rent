@@ -1,0 +1,26 @@
+services:
+  server:
+    build:
+      context: .
+      target: final
+    ports:
+      - 5000:5000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+
+  database:
+    image: postgres
+    restart: always
+    user: postgres
+    environment:
+      - POSTGRES_DB=database
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  
+volumes:
+  db-data:
