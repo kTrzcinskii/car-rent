@@ -30,13 +30,13 @@ jobs:
         run: dotnet build ./backend --configuration Release
 
       - name: Publish
-        run: dotnet publish ./backend -c Release
+        run: dotnet publish ./backend -c Release --property PublishDir=${{env.DOTNET_ROOT}}/car-rent-backend
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: "./backend/build"
+          path: "${{env.DOTNET_ROOT}}/car-rent-backend"
 
   test:
     runs-on: ubuntu-latest
