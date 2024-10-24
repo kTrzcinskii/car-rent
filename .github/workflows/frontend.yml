@@ -20,9 +20,11 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
+        working-directory: ./frontend
         run: npm install
 
       - name: Build Next.js app
+        working-directory: ./frontend
         run: npm run build
 
   deploy:
@@ -40,4 +42,4 @@ jobs:
         with:
           app-name: "car-rental"
           publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PUBLISH_PROFILE }}
-          package: ".next"
+          package: "./frontend/.next"
