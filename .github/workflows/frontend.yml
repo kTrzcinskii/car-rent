@@ -25,13 +25,16 @@ jobs:
 
       - name: Build Next.js app
         working-directory: ./frontend
-        run: npm run build
+        run: |
+          npm run build
+          mv ./build/static ./build/standalone/build
+          mv ./public ./build/standalone
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v3
         with:
           name: next-app
-          path: frontend/.next/
+          path: "./frontend/build/standalone"
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,7 +52,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: next-app
-          path: frontend/.next
+          path: "./frontend/build/standalone"
 
       - name: Deploy to Azure Web App
         id: deploy-frontend-to-webapp
@@ -57,4 +60,4 @@ jobs:
         with:
           app-name: "car-rental"
           publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PUBLISH_PROFILE }}
-          package: "./frontend/.next"
+          package: "./frontend/build/standalone"
