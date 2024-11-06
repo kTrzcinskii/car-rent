@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace App2.Controllers
+namespace AppRental.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

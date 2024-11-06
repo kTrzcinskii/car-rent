@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-
-namespace App
+namespace AppRental
 {
     public class DataContext: DbContext
     {
