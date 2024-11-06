@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace App
+namespace AppBrowser
 {
     public class DataContext: DbContext
     {

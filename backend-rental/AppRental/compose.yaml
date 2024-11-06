@@ -1,0 +1,26 @@
+services:
+  server-rental:
+    build:
+      context: .
+      target: final
+    ports:
+      - 5001:5001
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5001
+
+  database-rental:
+    image: postgres
+    restart: always
+    user: postgres
+    environment:
+      - POSTGRES_DB=database-rental
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-data-rental:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+  
+volumes:
+  db-data-rental:

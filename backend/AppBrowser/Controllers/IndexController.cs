@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace App.Controllers
+namespace AppBrowser.Controllers
 {
     // TODO: it seems that azure require application to return something on "/"
     // in the future we should delete this controller and return something meaningful or redirect to 404
