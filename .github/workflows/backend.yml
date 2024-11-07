@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "backend/**"
+      - ".github/**"
   workflow_dispatch:
 
 jobs:
@@ -30,7 +33,7 @@ jobs:
         run: dotnet build ./backend --configuration Release
 
       - name: Publish
-        run: dotnet publish ./backend/App -c Release --property PublishDir=${{env.DOTNET_ROOT}}/car-rent-backend
+        run: dotnet publish ./backend/AppBrowser -c Release --property PublishDir=${{env.DOTNET_ROOT}}/car-rent-backend
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4

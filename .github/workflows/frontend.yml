@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "frontend/**"
+      - ".github/**"
+
   workflow_dispatch:
 
 jobs:
