@@ -1,0 +1,79 @@
+name: Backend Rental CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend-rental/**"
+      - ".github/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.x"
+
+      - name: NuGet cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Build
+        run: dotnet build ./backend-rental --configuration Release
+
+      - name: Publish
+        run: dotnet publish ./backend-rental/AppRental -c Release --property PublishDir=${{env.DOTNET_ROOT}}/car-rent-api
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-rental-app
+          path: "${{env.DOTNET_ROOT}}/car-rent-api"
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.x"
+
+      - name: Test
+        run: dotnet test ./backend-rental
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - test
+    environment:
+      name: "Production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-rental-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: "CarRentalPublicAPI"
+          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_API_PUBLIC_PUBLISHPROFILE }}
