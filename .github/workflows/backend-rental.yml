@@ -1,11 +1,11 @@
-name: Backend CI/CD
+name: Backend Rental CI/CD
 
 on:
   push:
     branches:
       - main
     paths:
-      - "backend/**"
+      - "backend-rental/**"
       - ".github/**"
   workflow_dispatch:
 
@@ -30,16 +30,16 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Build
-        run: dotnet build ./backend --configuration Release
+        run: dotnet build ./backend-rental --configuration Release
 
       - name: Publish
-        run: dotnet publish ./backend/AppBrowser -c Release --property PublishDir=${{env.DOTNET_ROOT}}/car-rent-backend
+        run: dotnet publish ./backend-rental/AppRental -c Release --property PublishDir=${{env.DOTNET_ROOT}}/car-rent-api
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: "${{env.DOTNET_ROOT}}/car-rent-backend"
+          name: .net-rental-app
+          path: "${{env.DOTNET_ROOT}}/car-rent-api"
 
   test:
     runs-on: ubuntu-latest
@@ -53,7 +53,7 @@ jobs:
           dotnet-version: "8.x"
 
       - name: Test
-        run: dotnet test ./backend
+        run: dotnet test ./backend-rental
 
   deploy:
     runs-on: ubuntu-latest
@@ -68,12 +68,12 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
+          name: .net-rental-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: "CarRentalBackend"
+          app-name: "CarRentalPublicAPI"
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_API_PUBLIC_PUBLISHPROFILE }}
