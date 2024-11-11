@@ -12,12 +12,13 @@ namespace AppRental.Infrastructure
             {
                 new Car
                 {
-                    Brand = "Brand",
-                    Model = "Model",
+                    Brand = "",
+                    Model = "",
                     ProductionYear = 2000,
                     Status = CarStatus.Available,
-                    Location = "W",
+                    Location = "",
                     CostPerDay = 0,
+                    InsuranceCostPerDay = 0
                 }
             };
 
