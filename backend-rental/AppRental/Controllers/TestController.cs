@@ -1,3 +1,4 @@
+using AppRental.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppRental.Controllers

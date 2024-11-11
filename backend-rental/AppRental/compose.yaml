@@ -17,10 +17,10 @@ services:
       - POSTGRES_DB=database-rental
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    volumes:
-      - db-data-rental:/var/lib/postgresql/data
+    # volumes:
+    #   - db-data-rental:/var/lib/postgresql/data
     ports:
       - 5433:5432
   
-volumes:
-  db-data-rental:
+# volumes:
+#   db-data-rental:
