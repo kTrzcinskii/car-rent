@@ -1,3 +1,4 @@
+using AppRental.Model;
 using Microsoft.EntityFrameworkCore;
 namespace AppRental
 {
@@ -6,5 +7,9 @@ namespace AppRental
         public DataContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<Car> Cars { get; set;}
+        public DbSet<Offer> Offers { get; set;}
+        public DbSet<Rent> Rents { get; set;}
     }
 }
