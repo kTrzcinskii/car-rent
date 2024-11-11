@@ -1,6 +1,6 @@
 using AppRental.Model;
 
-namespace AppRental
+namespace AppRental.Infrastructure
 {
     public class Seed
     {
@@ -17,7 +17,7 @@ namespace AppRental
                     ProductionYear = 2000,
                     Status = CarStatus.Available,
                     Location = "",
-                    BaseCostPerDay = 0,
+                    CostPerDay = 0,
                 }
             };
 

@@ -1,4 +1,4 @@
-using AppRental;
+using AppRental.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +30,7 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     await context.Database.MigrateAsync();
-    //await Seed.SeedData(context);
+    // await Seed.SeedData(context);
 }
 catch (Exception ex)
 {

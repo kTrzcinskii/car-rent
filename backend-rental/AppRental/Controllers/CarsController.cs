@@ -1,3 +1,5 @@
+using AppRental.DTO;
+using AppRental.Infrastructure;
 using AppRental.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +18,18 @@ namespace AppRental.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Car>>> GetCars()
+        public async Task<ActionResult<List<CarDTO>>> GetCars()
         {
-            return await _context.Cars.ToListAsync();
+            var cars = await _context.Cars.Where(car => car.Status == CarStatus.Available).ToListAsync();
+            var carDTOs = cars.Select(car => new CarDTO
+            {
+                Brand = car.Brand,
+                Model = car.Model,
+                ProductionYear = car.ProductionYear,
+                Id = car.Id,
+            }).ToList();
+
+            return Ok(carDTOs);
         }
     }
 }

@@ -1,6 +1,6 @@
 using AppRental.Model;
 using Microsoft.EntityFrameworkCore;
-namespace AppRental
+namespace AppRental.Infrastructure
 {
     public class DataContext: DbContext
     {
