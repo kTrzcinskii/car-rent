@@ -15,7 +15,7 @@ namespace AppRental.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Offer>> GetOffer(RequestDTO requestDTO)
+        public async Task<ActionResult<OfferDTO>> GetOffer(RequestDTO requestDTO)
         {
             var car = await _context.Cars.FindAsync(requestDTO.CarId);
 
@@ -26,24 +26,38 @@ namespace AppRental.Controllers
 
             var offer = new Offer 
             {
-                CarId = requestDTO.CarId,
+                Car = car,
                 CostPerDay = car.CostPerDay,
                 InsuranceCostPerDay = car.InsuranceCostPerDay
                 // data waznosci oferty
             };
 
-            _context.Offers.Add(offer);
-            await _context.SaveChangesAsync();
+            //_context.Offers.Add(offer);
+            //await _context.SaveChangesAsync();
 
-            return Ok(offer);
+            var offerDTO = new OfferDTO
+            {
+                Id = offer.Id,
+                CarId = car.Id,
+                CostPerDay = car.CostPerDay,
+                InsuranceCostPerDay = car.InsuranceCostPerDay
+            };
+
+            return Ok(offerDTO);
         }
 
         [HttpPost("{offerId}")]
         public async Task<IActionResult> CreateRent(int offerId, RentDTO rentDTO)
         {
+            var offer = await _context.Offers.FindAsync(offerId);
+            if(offer == null)
+            {
+                return BadRequest();
+            }
+
             var rent = new Rent
             {
-                OfferId = offerId,
+                Offer = offer,
                 FirstName = rentDTO.FirstName,
                 LastName = rentDTO.LastName,
                 Email = rentDTO.Email,
