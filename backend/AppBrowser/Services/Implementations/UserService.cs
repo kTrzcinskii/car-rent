@@ -21,8 +21,21 @@ public class UserService : IUserService
         return user;
     }
 
-    public Task<User> CreateUser(CreateUserDTO createUserDto)
+    public async Task<User> CreateUserAsync(string email, CreateUserDTO createUserDto)
     {
-        throw new NotImplementedException();
+        var user = new User
+        {
+            FirstName = createUserDto.FirstName,
+            LastName = createUserDto.LastName,
+            Email = email,
+            Location = createUserDto.Location,
+            DateOfBirth = createUserDto.DateOfBirth,
+            DateOfLicenseObtained = createUserDto.DateOfLicenseObtained
+        };
+
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+
+        return user;
     }
 }

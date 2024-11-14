@@ -56,7 +56,7 @@ public class AuthController : ControllerBase
         {
             return BadRequest("User with such email already exists");
         }
-        var user = await _userService.CreateUser(createUserDto);
+        var user = await _userService.CreateUserAsync(email, createUserDto);
         var token = _jwtService.GenerateToken(user);
         return Ok(new { Token = token, FinishRegistration = false });
     }

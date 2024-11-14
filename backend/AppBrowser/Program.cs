@@ -57,6 +57,8 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 
+app.UseCors("AllowFrontend");
+
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 try
@@ -73,6 +75,5 @@ catch (Exception ex)
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors("AllowFrontend");
 
 app.Run();

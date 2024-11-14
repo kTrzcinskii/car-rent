@@ -6,5 +6,5 @@ namespace AppBrowser.Services.Interfaces;
 public interface IUserService
 {
     Task<User?> GetUserByEmailAsync(string email);
-    Task<User> CreateUser(CreateUserDTO createUserDto);
+    Task<User> CreateUserAsync(string email, CreateUserDTO createUserDto);
 }
