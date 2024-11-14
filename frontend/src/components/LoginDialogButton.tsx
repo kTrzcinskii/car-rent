@@ -6,8 +6,6 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription,
-  DialogClose,
-  DialogFooter,
   DialogHeader,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
@@ -17,7 +15,7 @@ const LoginDialogButton = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Login</Button>
+        <Button variant="ghost">Login</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
@@ -26,13 +24,6 @@ const LoginDialogButton = () => {
             <GoogleAuth />
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="sm:justify-center">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
