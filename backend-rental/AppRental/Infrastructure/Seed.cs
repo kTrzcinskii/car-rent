@@ -18,6 +18,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 89,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -27,6 +28,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 95,
+                    InsuranceCostPerDay = 25
                 },
                 new Car
                 {
@@ -36,6 +38,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Krakow",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 30
                 },
                 new Car
                 {
@@ -45,6 +48,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Rented,
                     Location = "Warsaw",
                     CostPerDay = 85,
+                    InsuranceCostPerDay = 25
                 },
                 new Car
                 {
@@ -54,6 +58,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Returned,
                     Location = "Warsaw",
                     CostPerDay = 85,
+                    InsuranceCostPerDay = 25
                 },
                 new Car
                 {
@@ -63,6 +68,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Rented,
                     Location = "Krakow",
                     CostPerDay = 85,
+                    InsuranceCostPerDay = 25
                 },
                 new Car
                 {
@@ -72,6 +78,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Returned,
                     Location = "Krakow",
                     CostPerDay = 85,
+                    InsuranceCostPerDay = 25
                 },
                 new Car
                 {
@@ -81,6 +88,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 75,
+                    InsuranceCostPerDay = 10
                 },
                 new Car
                 {
@@ -90,6 +98,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Krakow",
                     CostPerDay = 69,
+                    InsuranceCostPerDay = 10
                 },
                 new Car
                 {
@@ -99,6 +108,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Rented,
                     Location = "Warsaw",
                     CostPerDay = 109,
+                    InsuranceCostPerDay = 30
                 },
                 new Car
                 {
@@ -108,6 +118,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 65,
+                    InsuranceCostPerDay = 15
                 },
                 new Car
                 {
@@ -117,6 +128,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 70,
+                    InsuranceCostPerDay = 15
                 },
                 new Car
                 {
@@ -126,6 +138,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 80,
+                    InsuranceCostPerDay = 15
                 },
                 new Car
                 {
@@ -135,6 +148,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -144,6 +158,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -153,6 +168,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -162,6 +178,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -171,6 +188,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -180,6 +198,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -189,6 +208,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -198,6 +218,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -207,6 +228,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -216,6 +238,7 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 },
                 new Car
                 {
@@ -225,8 +248,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
+                    InsuranceCostPerDay = 20
                 }
-
             };
 
             await context.Cars.AddRangeAsync(cars);

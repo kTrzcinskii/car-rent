@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppRental.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class OfferController: ControllerBase
     {
         private readonly DataContext _context;
@@ -14,7 +16,7 @@ namespace AppRental.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<OfferDTO>> GetOffer(RequestDTO requestDTO)
         {
             var car = await _context.Cars.FindAsync(requestDTO.CarId);
@@ -32,8 +34,8 @@ namespace AppRental.Controllers
                 // data waznosci oferty
             };
 
-            //_context.Offers.Add(offer);
-            //await _context.SaveChangesAsync();
+            _context.Offers.Add(offer);
+            await _context.SaveChangesAsync();
 
             var offerDTO = new OfferDTO
             {
@@ -61,7 +63,7 @@ namespace AppRental.Controllers
                 FirstName = rentDTO.FirstName,
                 LastName = rentDTO.LastName,
                 Email = rentDTO.Email,
-                StartDate = DateTime.Now
+                StartDate = DateTime.UtcNow
             };
             _context.Rents.Add(rent);
             await _context.SaveChangesAsync();
