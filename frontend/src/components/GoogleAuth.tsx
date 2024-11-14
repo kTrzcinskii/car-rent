@@ -4,14 +4,17 @@ import React from "react";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { API_BASE_URL } from "~/lib/consts";
+import { API_BASE_URL, TOKEN_KEY } from "~/lib/consts";
+import { useRouter } from "next/navigation";
 
 interface IBackendResponse {
-  Token: string;
-  FinishRegistration: boolean;
+  token: string;
+  finishRegistration: boolean;
 }
 
 const GoogleAuth = () => {
+  const router = useRouter();
+
   const mutation = useMutation({
     mutationFn: async (googleToken: string) => {
       const url = `${API_BASE_URL}/Auth/google/callback`;
@@ -24,7 +27,11 @@ const GoogleAuth = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log(data);
+      // For now just local-storage, might change to cookies later
+      localStorage.setItem(TOKEN_KEY, data.token);
+      if (data.finishRegistration) {
+        router.push("/complete-registration");
+      }
     },
     onError: (error) => {
       console.error("Authentication failed:", error);

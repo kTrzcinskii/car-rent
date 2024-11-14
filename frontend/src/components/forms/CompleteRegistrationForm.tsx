@@ -59,11 +59,7 @@ const CompleteRegistrationDatePicker = ({
                     !field.value && "text-muted-foreground",
                   )}
                 >
-                  {field.value ? (
-                    format(field.value, "PPP")
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
+                  {field.value && format(field.value, "PPP")}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
               </FormControl>
