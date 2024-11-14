@@ -22,6 +22,10 @@ import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
+import { useMutation } from "@tanstack/react-query";
+import { API_BASE_URL, TOKEN_KEY } from "~/lib/consts";
+import axios from "axios";
+import { type IAuthResponse } from "~/responses/IAuthResponse";
 
 const formSchema = z.object({
   FirstName: z.string().min(2),
@@ -95,8 +99,37 @@ const CompleteRegistrationForm = () => {
     },
   });
 
+  const mutation = useMutation({
+    mutationFn: async (values: FormSchemaType) => {
+      const payload = {
+        ...values,
+        DateOfBirth: values.DateOfBirth.toISOString(),
+        DateOfLicenseObtained: values.DateOfLicenseObtained.toISOString(),
+      };
+      const url = `${API_BASE_URL}/Auth/finish-registration`;
+      const token = localStorage.getItem(TOKEN_KEY);
+      const response = await axios.post<IAuthResponse>(url, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      localStorage.setItem(TOKEN_KEY, data.token);
+      if (data.finishRegistration) {
+        console.error("Reigstration failed. Try again later.");
+      }
+    },
+    onError: (error) => {
+      console.error("Request failed:", error);
+    },
+  });
+
   function onSubmit(values: FormSchemaType) {
-    console.log(values);
+    mutation.mutate(values);
+    console.log("Successfully logged in");
   }
 
   return (

@@ -6,11 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { API_BASE_URL, TOKEN_KEY } from "~/lib/consts";
 import { useRouter } from "next/navigation";
-
-interface IBackendResponse {
-  token: string;
-  finishRegistration: boolean;
-}
+import { type IAuthResponse } from "~/responses/IAuthResponse";
 
 const GoogleAuth = () => {
   const router = useRouter();
@@ -18,9 +14,8 @@ const GoogleAuth = () => {
   const mutation = useMutation({
     mutationFn: async (googleToken: string) => {
       const url = `${API_BASE_URL}/Auth/google/callback`;
-      const response = await axios.post<IBackendResponse>(url, googleToken, {
+      const response = await axios.post<IAuthResponse>(url, googleToken, {
         headers: {
-          Accept: "*/*",
           "Content-Type": "application/json",
         },
       });
@@ -31,6 +26,8 @@ const GoogleAuth = () => {
       localStorage.setItem(TOKEN_KEY, data.token);
       if (data.finishRegistration) {
         router.push("/complete-registration");
+      } else {
+        console.log("already have an account");
       }
     },
     onError: (error) => {
