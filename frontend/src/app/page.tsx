@@ -1,5 +1,6 @@
 "use client";
 
+import GoogleAuth from "~/components/GoogleAuth";
 import { Button } from "~/components/ui/button";
 
 export default function HomePage() {
@@ -12,6 +13,7 @@ export default function HomePage() {
         <Button variant="outline" onClick={() => alert("OnClick action")}>
           This is custom button from shadcn
         </Button>
+        <GoogleAuth />
       </div>
     </main>
   );
