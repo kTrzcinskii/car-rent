@@ -1,3 +1,4 @@
+using AppBrowser.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppBrowser.Controllers
