@@ -12,8 +12,6 @@ interface Props {
 export function Providers({ children }: Props) {
   const [queryClient] = useState(() => new QueryClient());
 
-  console.log("ID: ", process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
-
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
       <QueryClientProvider client={queryClient}>
