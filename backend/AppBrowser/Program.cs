@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IPaginationService, PaginationService>();
+builder.Services.AddScoped<ICarService, CarService>();
 
 builder.Services.AddDbContext<DataContext>(
     opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
@@ -75,6 +76,5 @@ catch (Exception ex)
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.Run();
