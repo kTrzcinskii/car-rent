@@ -27,6 +27,7 @@ namespace AppRental.Controllers
                 Model = car.Model,
                 ProductionYear = car.ProductionYear,
                 Id = car.Id,
+                Localization = car.Location
             }).ToList();
 
             return Ok(carDTOs);
