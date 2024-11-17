@@ -21,7 +21,7 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task<User> CreateUserAsync(string email, CreateUserDTO createUserDto)
+    public async Task<User> CreateUserAsync(string email, CreateUserDto createUserDto)
     {
         var user = new User
         {

@@ -14,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IPaginationService, PaginationService>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<CarRentalExternalProviderService>();
 
 builder.Services.AddDbContext<DataContext>(
     opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
@@ -46,6 +49,8 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -74,6 +79,5 @@ catch (Exception ex)
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.Run();
