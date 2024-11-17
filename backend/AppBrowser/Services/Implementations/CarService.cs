@@ -5,8 +5,17 @@ namespace AppBrowser.Services.Implementations;
 
 public class CarService : ICarService
 {
-    public Task<List<CarDto>> SearchCars(string brandName, string modelName)
+    private readonly CarRentalExternalProviderService _carRentalExternalProviderService;
+
+    public CarService(CarRentalExternalProviderService carRentalExternalProviderService)
     {
-        throw new NotImplementedException();
+        _carRentalExternalProviderService = carRentalExternalProviderService;
+    }
+
+    public async Task<List<CarDto>> SearchCars(string brandName, string modelName)
+    {
+        var carRentalApiCars = await _carRentalExternalProviderService.SearchCars(brandName, modelName);
+        // TODO: when we have more than one provider we should somehow merge results here
+        return carRentalApiCars;
     }
 }

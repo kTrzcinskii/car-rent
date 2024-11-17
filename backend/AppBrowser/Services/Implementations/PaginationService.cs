@@ -16,7 +16,7 @@ public class PaginationService : IPaginationService
         return new PaginatedDto<T>
         {
             Data = data,
-            HasNextPage = (page * pageSize) < totalCount,
+            HasNextPage = ((page + 1) * pageSize) < totalCount,
             HasPreviousPage = page > 0
         };
     }
