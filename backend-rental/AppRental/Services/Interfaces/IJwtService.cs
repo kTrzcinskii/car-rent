@@ -6,6 +6,5 @@ namespace AppRental.Services.Interfaces
     {
         string GenerateRentConfirmationToken();
         string GenerateLink(int rentId);
-        (ClaimsPrincipal?, string? error) ValidateRentConfirmationToken(string token);
     }
 }
