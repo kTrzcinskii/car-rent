@@ -45,15 +45,16 @@ const CarCard = ({
               value={String(productionYear)}
             />
             <TitleValueElement title="Localization" value={localization} />
-            {Object.entries(metadata).map(([title, value]) => {
-              return (
-                <TitleValueElement
-                  key={title}
-                  title={title}
-                  value={String(value)}
-                />
-              );
-            })}
+            {metadata &&
+              Object.entries(metadata).map(([title, value]) => {
+                return (
+                  <TitleValueElement
+                    key={title}
+                    title={title}
+                    value={String(value)}
+                  />
+                );
+              })}
           </CardContent>
         </Card>
       </Link>

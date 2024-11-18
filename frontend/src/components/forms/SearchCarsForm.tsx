@@ -14,6 +14,8 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
+import { type Dispatch, type SetStateAction } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const formSchema = z.object({
   ModelName: z.string().optional(),
@@ -22,17 +24,32 @@ const formSchema = z.object({
 
 type FormSchemaType = z.infer<typeof formSchema>;
 
-const SearchCarsForm = () => {
+interface ISearchCarsFromProps {
+  defaultModelName: string;
+  setModelName: Dispatch<SetStateAction<string>>;
+  defaultBrandName: string;
+  setBrandName: Dispatch<SetStateAction<string>>;
+}
+
+const SearchCarsForm = (props: ISearchCarsFromProps) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      BrandName: "",
-      ModelName: "",
+      BrandName: props.defaultBrandName,
+      ModelName: props.defaultModelName,
     },
   });
 
   const onSubmit = (values: FormSchemaType) => {
-    console.log("perform search operation: ", values);
+    const params = new URLSearchParams(searchParams.toString());
+    props.setBrandName(values.BrandName ?? "");
+    params.set("brandName", values.BrandName ?? "");
+    props.setModelName(values.ModelName ?? "");
+    params.set("modelName", values.ModelName ?? "");
+    router.replace(`/browse?${params.toString()}`);
   };
 
   return (

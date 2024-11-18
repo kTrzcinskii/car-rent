@@ -1,7 +1,7 @@
 import { type ISingleCarResponse } from "./ISignleCarResponse";
 
 export interface ICarsListResponse {
-  cars: ISingleCarResponse[];
+  data: ISingleCarResponse[];
   count: number;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
