@@ -18,7 +18,7 @@ public class CarController : ControllerBase
     }
 
     [HttpGet("search")]
-    public async Task<ActionResult<PaginatedDto<CarDto>>> SearchCars([FromQuery] string brandName = "", [FromQuery] string modelName = "", [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
+    public async Task<ActionResult<PaginatedDto<CarDto>>> SearchCars([FromQuery] string brandName = "", [FromQuery] string modelName = "", [FromQuery] int page = 0, [FromQuery] int pageSize = 5)
     {
         var allCars = await _carService.SearchCars(brandName, modelName);
         var response = _paginationService.GetPaginatedResponse(allCars, page, pageSize);
