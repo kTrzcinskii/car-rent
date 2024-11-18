@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import LoginDialogButton from "./LoginDialogButton";
+import Link from "next/link";
 
 const PATH_WITH_HIDDEN_NAV = ["/complete-registration"];
 
@@ -19,7 +20,9 @@ const Navbar = () => {
       <div className="mx-auto px-6 lg:px-10">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-shrink-0">
-            <span className="text-xl font-bold">Car Rent Browser</span>
+            <Link href="/">
+              <span className="text-xl font-bold">Car Rent Browser</span>
+            </Link>
           </div>
           <div className="flex items-center">
             <LoginDialogButton />

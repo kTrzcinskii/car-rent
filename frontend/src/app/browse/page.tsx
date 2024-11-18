@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import CarsSearchResults from "../../components/CarsSearchResults";
+import { REACT_QUERY_SEARCH_KEY } from "~/lib/consts";
 
 const BrowsePage = () => {
   const searchParams = useSearchParams();
@@ -20,7 +21,7 @@ const BrowsePage = () => {
   const page = searchParams.get("page") ?? "0";
   const params: ISearchCarsParams = { page, brandName, modelName };
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["search", params],
+    queryKey: [REACT_QUERY_SEARCH_KEY, params],
     queryFn: ({ queryKey }) => searchCars(queryKey[1] as ISearchCarsParams),
   });
 
