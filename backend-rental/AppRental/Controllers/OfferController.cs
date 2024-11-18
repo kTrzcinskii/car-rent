@@ -12,21 +12,17 @@ namespace AppRental.Controllers
     public class OfferController: ControllerBase
     {
         private readonly DataContext _context;
-        private readonly IConfiguration _configuration;
-
         private readonly IJwtService _jwtService;
         private readonly IEmailService _emailService;
 
-        public OfferController(DataContext context, IConfiguration configuration, IJwtService jwtService,
-            IEmailService emailService)
+        public OfferController(DataContext context, IJwtService jwtService, IEmailService emailService)
         {
             _context = context;
-            _configuration = configuration;
             _jwtService = jwtService;
             _emailService = emailService;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<OfferDTO>> GetOffer(RequestDTO requestDTO)
         {
             var car = await _context.Cars.FindAsync(requestDTO.CarId);
@@ -58,7 +54,7 @@ namespace AppRental.Controllers
             return Ok(offerDTO);
         }
         [HttpPost("rentme/{offerId}")]
-        public async Task<ActionResult<int>> CreateRent(int offerId, RentDTO rentDTO)
+        public async Task<ActionResult> CreateRent(int offerId, RentDTO rentDTO)
         {
             var offer = await _context.Offers.FindAsync(offerId);
             if(offer == null)
@@ -79,11 +75,11 @@ namespace AppRental.Controllers
             var confirmationLink = _jwtService.GenerateLink(rent.Id);
             await _emailService.SendRentConfirmationEmailAsync(rent.Email, confirmationLink);
 
-            return Ok(rent.Id);
+            return Ok(new {RentId = rent.Id});
         }
 
         [Authorize]
-        [HttpPut("confirm")]
+        [HttpGet("confirm")]
         public async Task<IActionResult> ConfirmRent(int rentId)
         {
             var rent = await _context.Rents.FindAsync(rentId);

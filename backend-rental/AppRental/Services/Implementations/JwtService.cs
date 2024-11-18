@@ -34,7 +34,7 @@ namespace AppRental.Services.Implementations
         public string GenerateLink(int rentId)
         {
             var token = GenerateRentConfirmationToken();
-            return $"https://localhost:5001/api/confirm?rentId={rentId}&token={token}"; // hardcoded origin
+            return $"https://localhost:5001/api/offer/confirm?rentId={rentId}&token={token}"; // hardcoded origin
         }
     }
 }
