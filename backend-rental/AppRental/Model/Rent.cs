@@ -10,5 +10,7 @@ namespace AppRental.Model
 
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+
+        public bool Confirmed { get; set; } = false; 
     }
 }
