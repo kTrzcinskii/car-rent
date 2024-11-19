@@ -1,4 +1,5 @@
-﻿using AppBrowser.DTOs;
+﻿using System.Security.Claims;
+using AppBrowser.DTOs;
 using AppBrowser.Infrastructure;
 using AppBrowser.Model;
 using AppBrowser.Services.Interfaces;
@@ -37,5 +38,27 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
 
         return user;
+    }
+
+    public UserInfoDto GetUserInfoFromClaims(IEnumerable<Claim> claims)
+    {
+        var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+        if (email == null)
+        {
+            throw new ArgumentException("Missing email in claims");
+        }
+    
+        var firstName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+        if (firstName == null)
+        {
+            throw new ArgumentException("Missing firstName in claims");
+        }
+
+        var userInfo = new UserInfoDto
+        {
+            Email = email,
+            FirstName = firstName
+        };
+        return userInfo;
     }
 }

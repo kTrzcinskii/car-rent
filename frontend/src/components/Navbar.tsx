@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import LoginDialogButton from "./LoginDialogButton";
 import Link from "next/link";
+import UserInfo from "./UserInfo";
 
 const PATH_WITH_HIDDEN_NAV = ["/complete-registration"];
 
@@ -12,8 +12,6 @@ const Navbar = () => {
   if (PATH_WITH_HIDDEN_NAV.includes(pathname)) {
     return null;
   }
-
-  // TODO: when user is logged in display some data about him instead of login button (or just logout button?)
 
   return (
     <nav className="w-full border-b border-gray-800">
@@ -25,7 +23,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center">
-            <LoginDialogButton />
+            <UserInfo />
           </div>
         </div>
       </div>

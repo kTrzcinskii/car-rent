@@ -107,7 +107,7 @@ const CompleteRegistrationForm = () => {
         DateOfLicenseObtained: values.DateOfLicenseObtained.toISOString(),
       };
       const url = `${API_BASE_URL}/Auth/finish-registration`;
-      const token = localStorage.getItem(TOKEN_KEY);
+      const token = sessionStorage.getItem(TOKEN_KEY);
       const response = await axios.post<IAuthResponse>(url, payload, {
         headers: {
           "Content-Type": "application/json",
@@ -117,7 +117,7 @@ const CompleteRegistrationForm = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      localStorage.setItem(TOKEN_KEY, data.token);
+      sessionStorage.setItem(TOKEN_KEY, data.token);
       if (data.finishRegistration) {
         console.error("Reigstration failed. Try again later.");
       }

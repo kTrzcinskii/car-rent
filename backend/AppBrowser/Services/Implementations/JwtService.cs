@@ -22,8 +22,8 @@ public class JwtService : IJwtService
     {
         var claims = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Email, user.Email),
-            new(JwtRegisteredClaimNames.Name, user.FirstName),
+            new(ClaimTypes.Email, user.Email),
+            new(ClaimTypes.Name, user.FirstName),
             new("Role", "User"),
         };
 
@@ -34,7 +34,7 @@ public class JwtService : IJwtService
     {
         var claims = new List<Claim>
         {
-            new (JwtRegisteredClaimNames.Email, email),
+            new (ClaimTypes.Email, email),
             new ("CanFinishRegistration", "true"),
         };
 
