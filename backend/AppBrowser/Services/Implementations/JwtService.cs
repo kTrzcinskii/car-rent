@@ -44,7 +44,6 @@ public class JwtService : IJwtService
     private string GenerateTokenFromClaims(IEnumerable<Claim> claims, int minutes = 60 * 24)
     {
         var secret = _configuration["Jwt:Secret"];
-        _logger.LogError("Secret: {}", secret);
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

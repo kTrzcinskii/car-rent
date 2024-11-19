@@ -17,6 +17,7 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IPaginationService, PaginationService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<CarRentalExternalProviderService>();
+builder.Services.AddScoped<IOfferService, OfferService>();
 
 builder.Services.AddDbContext<DataContext>(
     opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Database")));

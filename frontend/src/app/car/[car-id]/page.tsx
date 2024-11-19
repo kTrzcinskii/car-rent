@@ -1,10 +1,13 @@
 "use client";
 
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { REACT_QUERY_SEARCH_KEY } from "~/lib/consts";
 import { type ISingleCarResponse } from "~/responses/ISignleCarResponse";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
+import { useState } from "react";
+import getOffer from "~/api/getOffer";
+import AcceptOfferCard from "~/components/AcceptOfferCard";
 
 const TitleValue = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -16,12 +19,11 @@ const TitleValue = ({ title, value }: { title: string; value: string }) => {
 
 const CarPage = ({ params }: { params: { "car-id": string } }) => {
   const carId = params["car-id"];
-
   const queryClient = useQueryClient();
   const queryClientData = queryClient.getQueriesData({
     queryKey: [REACT_QUERY_SEARCH_KEY],
   });
-
+  const [shouldGetOffers, setShouldGetOffers] = useState(false);
   // TODO: add error handling for this mess
   const carDataSearchGroup = queryClientData
     .map(
@@ -33,6 +35,14 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
   const carData = carDataSearchGroup.find(
     (car: ISingleCarResponse) => car.carId == Number(carId),
   );
+
+  const { data } = useQuery({
+    queryKey: ["getOffer", carData?.carId, carData?.providerId],
+    queryFn: ({ queryKey }) =>
+      getOffer(Number(queryKey[1]), Number(queryKey[2])),
+    enabled: shouldGetOffers,
+  });
+
   // TODO: handle when car is undefined
   if (carData == undefined) {
     return <div>couldnt load car</div>;
@@ -70,7 +80,17 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
           />
         </div>
       </div>
-      <Button>Generate offers</Button>
+      {data ? (
+        <AcceptOfferCard
+          costPerDay={data.costPerDay}
+          insuranceCostPerDay={data.insuranceCostPerDay}
+          offerId={data.offerId}
+        />
+      ) : (
+        <Button onClick={() => setShouldGetOffers(true)}>
+          Generate offers
+        </Button>
+      )}
     </div>
   );
 };

@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using AppBrowser.DTOs;
 using AppBrowser.Services.Interfaces;
 
@@ -37,5 +38,22 @@ public class CarRentalExternalProviderService : IExternalProviderService
             PropertyNameCaseInsensitive = true
         });
         return cars == null ? [] : cars.Select((c) => CarDto.MapFromCarRentalProvider(c, GetProviderId())).ToList();
+    }
+
+    public async Task<CarRentalExternalProviderOfferDto> GetOffer(CarRentalExternalProviderCreateOfferDto createOfferDto)
+    {
+        string url = $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/offer";
+        var json = JsonSerializer.Serialize(createOfferDto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync(url, content);
+        if (!response.IsSuccessStatusCode) throw new HttpRequestException("Couldnt get offer from external provider");
+        json = await response.Content.ReadAsStringAsync();
+        var offerDto = JsonSerializer.Deserialize<CarRentalExternalProviderOfferDto>(json, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+        if (offerDto == null)
+            throw new HttpRequestException("Coulnd't parse body from external provider");
+        return offerDto;
     }
 }
