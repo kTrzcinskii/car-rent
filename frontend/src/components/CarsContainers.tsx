@@ -8,7 +8,7 @@ interface CarsContainerProps {
 const CarsContainer = ({ data }: CarsContainerProps) => {
   return (
     <div className="w-full space-y-7">
-      {data.data.map((car) => {
+      {data?.data.map((car) => {
         return <CarCard {...car} key={car.carId} />;
       })}
     </div>
