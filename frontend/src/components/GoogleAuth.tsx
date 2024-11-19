@@ -23,7 +23,7 @@ const GoogleAuth = () => {
     },
     onSuccess: (data) => {
       // For now just local-storage, might change to cookies later
-      localStorage.setItem(TOKEN_KEY, data.token);
+      sessionStorage.setItem(TOKEN_KEY, data.token);
       if (data.finishRegistration) {
         router.push("/complete-registration");
       } else {
