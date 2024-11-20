@@ -14,12 +14,14 @@ namespace AppRental.Controllers
         private readonly DataContext _context;
         private readonly IJwtService _jwtService;
         private readonly IEmailService _emailService;
+        private readonly ILogger<OfferController> _logger;
 
-        public OfferController(DataContext context, IJwtService jwtService, IEmailService emailService)
+        public OfferController(DataContext context, IJwtService jwtService, IEmailService emailService, ILogger<OfferController> logger)
         {
             _context = context;
             _jwtService = jwtService;
             _emailService = emailService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -27,7 +29,7 @@ namespace AppRental.Controllers
         {
             var car = await _context.Cars.FindAsync(requestDTO.CarId);
 
-            if (car == null || car.Status != CarStatus.Available)
+            if (car is not { Status: CarStatus.Available })
             {
                 return NotFound("Car not found or already rented.");
             }
@@ -53,8 +55,8 @@ namespace AppRental.Controllers
 
             return Ok(offerDTO);
         }
-        [HttpPost("rentme/{offerId}")]
-        public async Task<ActionResult> CreateRent(int offerId, RentDTO rentDTO)
+        [HttpPost("create-rent")]
+        public async Task<ActionResult> CreateRent([FromQuery] int offerId, [FromBody] RentDTO rentDTO)
         {
             var offer = await _context.Offers.FindAsync(offerId);
             if(offer == null)
@@ -79,11 +81,12 @@ namespace AppRental.Controllers
         }
 
         [Authorize]
-        [HttpGet("confirm")]
+        [HttpGet("confirm-rent")]
         public async Task<IActionResult> ConfirmRent(int rentId)
         {
             var rent = await _context.Rents.FindAsync(rentId);
-
+            _logger.LogInformation("Rent id: {}", rent?.Id);
+            
             if(rent == null)
                 return BadRequest("Rent not found");
             if(rent.Confirmed)
@@ -92,6 +95,14 @@ namespace AppRental.Controllers
             rent.Confirmed = true;
             rent.StartDate = DateTime.UtcNow;
 
+            _logger.LogInformation("Offer id: {}", rent.Offer.Id);
+            _logger.LogInformation("Car id: {}", rent.Offer.Car.Id);
+            
+            var car = _context.Cars.FirstOrDefault((c) => c.Id == rent.Offer.Car.Id);
+            
+            if (car == null)
+                return BadRequest("Car for the rent not found");
+            car.Status = CarStatus.Rented;
             await _context.SaveChangesAsync();
 
             return Ok();
