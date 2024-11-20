@@ -6,14 +6,23 @@ import {
   CardFooter,
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
+import acceptOffer, { type IAcceptOfferParams } from "~/api/acceptOffer";
 
 interface IAcceptOfferCardProps {
   offerId: number;
   costPerDay: number;
   insuranceCostPerDay: number;
+  providerId: number;
 }
 
 const AcceptOfferCard = (props: IAcceptOfferCardProps) => {
+  const mutation = useMutation({
+    mutationFn: (values: IAcceptOfferParams) => acceptOffer(values),
+    onSuccess: () => alert("check your mail"),
+    onError: (error) => console.log(error),
+  });
+
   return (
     <Card className="mx-auto min-w-[300px] p-4">
       <CardHeader>
@@ -37,7 +46,15 @@ const AcceptOfferCard = (props: IAcceptOfferCardProps) => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full bg-green-500 text-white hover:bg-green-600">
+        <Button
+          className="w-full bg-green-500 text-white hover:bg-green-600"
+          onClick={() =>
+            mutation.mutate({
+              offerId: props.offerId,
+              providerId: props.providerId,
+            })
+          }
+        >
           Accept Offer
         </Button>
       </CardFooter>
