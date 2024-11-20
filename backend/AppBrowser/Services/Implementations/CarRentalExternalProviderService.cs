@@ -56,4 +56,24 @@ public class CarRentalExternalProviderService : IExternalProviderService
             throw new HttpRequestException("Coulnd't parse body from external provider");
         return offerDto;
     }
+
+    public async Task<CarRentalExternalProviderRentDto> AcceptOffer(
+        CarRentalExternalProviderCreateRentDto createRentDto, int offerId)
+    {
+        string url =
+            $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/offer/create-rent?offerId={offerId}";
+        var json = JsonSerializer.Serialize(createRentDto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync(url, content);
+        if (!response.IsSuccessStatusCode)
+            throw new HttpRequestException("Couldn't create rent using external provider");
+        json = await response.Content.ReadAsStringAsync();
+        var rentDto = JsonSerializer.Deserialize<CarRentalExternalProviderRentDto>(json, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+        if (rentDto == null)
+            throw new HttpRequestException("Couldn't parse body from external provider");
+        return rentDto;
+    }
 }
