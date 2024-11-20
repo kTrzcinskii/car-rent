@@ -28,4 +28,22 @@ public class OfferService : IOfferService
         }
         throw new ArgumentException("Unknown provider");
     }
+
+    public async Task AcceptOffer(User user, int offerId, int providerId)
+    {
+        if (providerId == _carRentalExternalProviderService.GetProviderId())
+        {
+            var request = new CarRentalExternalProviderCreateRentDto
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+            // TODO: maybe send it back to client?
+            // TODO: probably need to save it in browser db later on
+            var _ = await _carRentalExternalProviderService.AcceptOffer(request, offerId);
+            return;
+        }
+        throw new ArgumentException("Unknown provider");
+    }
 }

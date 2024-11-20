@@ -1,7 +1,7 @@
 export interface IOfferResponse {
   offerId: number;
   carId: number;
-  porviderId: number;
+  providerId: number;
   costPerDay: number;
   insuranceCostPerDay: number;
 }

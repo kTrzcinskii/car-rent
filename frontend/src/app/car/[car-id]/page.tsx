@@ -85,6 +85,7 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
           costPerDay={data.costPerDay}
           insuranceCostPerDay={data.insuranceCostPerDay}
           offerId={data.offerId}
+          providerId={data.providerId}
         />
       ) : (
         <Button onClick={() => setShouldGetOffers(true)}>
