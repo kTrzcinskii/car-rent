@@ -29,6 +29,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Modify jsons with secrets
+        run: |
+          jq '.AllowedOrigins = [env.URL_BROWSER] | .CarRentalBaseAPIUrl = URL_RENTAL' 
+          ./backend/AppBrowser/appsettings.Development.json > tmp.json && 
+          mv tmp.json ./backend/AppBrowser/appsettings.Development.json &&
+          
+          jq '.Jwt.Secret = [env.SECRET]' 
+          ./backend/AppBrowser/appsettings.json > tmp.json && 
+          mv tmp.json ./backend/AppBrowser/appsettings.json &&
+          
+          jq '.profiles.http.applicationUrl = env.URL_BROWSER' 
+          ./backend/AppBrowser/Properties/launchSettings.json > tmp.json && 
+          mv tmp.json ./backend/AppBrowser/Properties/launchSettings.json
+        env:
+            URL_BROWSER = ${{ secrets.backendBrowserUrl }}
+            URL_RENTAL = ${{ secrets.backendRentalUrl }}
+            SECRET = ${{ secrets.backendBrowserSecret }}
+
       - name: Build
         run: dotnet build ./backend --configuration Release
 
