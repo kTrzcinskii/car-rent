@@ -5,9 +5,14 @@ import { REACT_QUERY_SEARCH_KEY } from "~/lib/consts";
 import { type ISingleCarResponse } from "~/responses/ISignleCarResponse";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import getOffer from "~/api/getOffer";
 import AcceptOfferCard from "~/components/AcceptOfferCard";
+import { useToast } from "~/hooks/use-toast";
+import { Loader2 } from "lucide-react";
+import { REACT_QUERY_USER_INFO_KEY } from "~/lib/consts";
+import { getUserInfo } from "~/api/getUserInfo";
+import { useRouter } from "next/navigation";
 
 const TitleValue = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -36,17 +41,52 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
     (car: ISingleCarResponse) => car.carId == Number(carId),
   );
 
-  const { data } = useQuery({
+  const { data, isError, error, isLoading } = useQuery({
     queryKey: ["getOffer", carData?.carId, carData?.providerId],
     queryFn: ({ queryKey }) =>
       getOffer(Number(queryKey[1]), Number(queryKey[2])),
     enabled: shouldGetOffers,
   });
 
-  // TODO: handle when car is undefined
+  const { toast } = useToast();
+
+  const { data: userInfoData } = useQuery({
+    queryKey: [REACT_QUERY_USER_INFO_KEY],
+    queryFn: getUserInfo,
+  });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isError) {
+      if (shouldGetOffers) {
+        toast({
+          title: "Failed to generate an offer!",
+          description: `An error occurred while trying to generate the offer (${error?.message}). Try again later.`,
+          variant: "destructive",
+        });
+      }
+      setShouldGetOffers(false);
+    }
+  }, [isError, error, toast, shouldGetOffers]);
+
   if (carData == undefined) {
-    return <div>couldnt load car</div>;
+    router.push("/browse");
+    return <></>;
   }
+
+  const handleOnGenerateOfferClick = () => {
+    if (!userInfoData) {
+      toast({
+        title: "Unauthorize!",
+        description:
+          "This action is available only for authenticated users. Please log in to continue and access this feature.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setShouldGetOffers(true);
+  };
 
   return (
     <div className="flex w-full flex-col items-center justify-center space-y-10 lg:space-y-16">
@@ -88,7 +128,11 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
           providerId={data.providerId}
         />
       ) : (
-        <Button onClick={() => setShouldGetOffers(true)}>
+        <Button
+          onClick={() => handleOnGenerateOfferClick()}
+          disabled={isLoading}
+        >
+          {isLoading && <Loader2 className="animate-spin" />}
           Generate offers
         </Button>
       )}

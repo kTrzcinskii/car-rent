@@ -11,10 +11,13 @@ import {
 } from "~/lib/consts";
 import { useRouter } from "next/navigation";
 import { type IAuthResponse } from "~/responses/IAuthResponse";
+import { useToast } from "~/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 
 const GoogleAuth = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const mutation = useMutation({
     mutationFn: async (googleToken: string) => {
@@ -29,7 +32,15 @@ const GoogleAuth = () => {
     onSuccess: async (data) => {
       sessionStorage.setItem(TOKEN_KEY, data.token);
       if (data.finishRegistration) {
-        router.push("/complete-registration");
+        toast({
+          title: "Finish your profile!",
+          description:
+            "It's your first time login - you will be redirected in few seconds to finish your profile information...",
+          variant: "success",
+        });
+        setTimeout(() => {
+          router.push("/complete-registration");
+        }, 2000);
       } else {
         await queryClient.invalidateQueries({
           queryKey: [REACT_QUERY_USER_INFO_KEY],
@@ -37,7 +48,11 @@ const GoogleAuth = () => {
       }
     },
     onError: (error) => {
-      console.error("Authentication failed:", error);
+      toast({
+        title: "Failed to login!",
+        description: `An error occured while trying to login (${error}). Try again later.`,
+        variant: "destructive",
+      });
     },
   });
 
@@ -48,7 +63,11 @@ const GoogleAuth = () => {
   };
 
   const handleLoginFailure = () => {
-    console.error("Google login failed");
+    toast({
+      title: "Failed during google oauth!",
+      description: `An error occured while trying to login via google. Try again later.`,
+      variant: "destructive",
+    });
   };
 
   return (
@@ -57,6 +76,7 @@ const GoogleAuth = () => {
         onSuccess={(cr) => handleLoginSuccess(cr)}
         onError={handleLoginFailure}
       />
+      {mutation.isPending && <Loader2 className="animate-spin" />}
     </div>
   );
 };
