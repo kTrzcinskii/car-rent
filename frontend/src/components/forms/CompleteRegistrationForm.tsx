@@ -26,6 +26,8 @@ import { useMutation } from "@tanstack/react-query";
 import { API_BASE_URL, TOKEN_KEY } from "~/lib/consts";
 import axios from "axios";
 import { type IAuthResponse } from "~/responses/IAuthResponse";
+import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   FirstName: z.string().min(2),
@@ -99,6 +101,9 @@ const CompleteRegistrationForm = () => {
     },
   });
 
+  const { toast } = useToast();
+  const router = useRouter();
+
   const mutation = useMutation({
     mutationFn: async (values: FormSchemaType) => {
       const payload = {
@@ -119,17 +124,32 @@ const CompleteRegistrationForm = () => {
     onSuccess: (data) => {
       sessionStorage.setItem(TOKEN_KEY, data.token);
       if (data.finishRegistration) {
-        console.error("Reigstration failed. Try again later.");
+        toast({
+          title: "Failed to create a profile!",
+          description: `An error occured while trying to creaste the profile (server returned "profile not finished" message). Try again later.`,
+          variant: "destructive",
+        });
       }
     },
     onError: (error) => {
-      console.error("Request failed:", error);
+      toast({
+        title: "Failed to create a profile!",
+        description: `An error occured while trying to creaste the profile (${error.message}). Try again later.`,
+        variant: "destructive",
+      });
     },
   });
 
   function onSubmit(values: FormSchemaType) {
     mutation.mutate(values);
-    console.log("Successfully logged in");
+    toast({
+      title: "Profile created!",
+      description: "You will be redirected in few seconds...",
+      variant: "success",
+    });
+    setTimeout(() => {
+      router.push("/complete-registration");
+    }, 1500);
   }
 
   return (

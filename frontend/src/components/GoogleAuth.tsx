@@ -11,10 +11,12 @@ import {
 } from "~/lib/consts";
 import { useRouter } from "next/navigation";
 import { type IAuthResponse } from "~/responses/IAuthResponse";
+import { useToast } from "~/hooks/use-toast";
 
 const GoogleAuth = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const mutation = useMutation({
     mutationFn: async (googleToken: string) => {
@@ -37,7 +39,11 @@ const GoogleAuth = () => {
       }
     },
     onError: (error) => {
-      console.error("Authentication failed:", error);
+      toast({
+        title: "Failed to login!",
+        description: `An error occured while trying to login (${error}). Try again later.`,
+        variant: "destructive",
+      });
     },
   });
 
@@ -48,7 +54,11 @@ const GoogleAuth = () => {
   };
 
   const handleLoginFailure = () => {
-    console.error("Google login failed");
+    toast({
+      title: "Failed during google oauth!",
+      description: `An error occured while trying to login via google. Try again later.`,
+      variant: "destructive",
+    });
   };
 
   return (

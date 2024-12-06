@@ -5,9 +5,10 @@ import { REACT_QUERY_SEARCH_KEY } from "~/lib/consts";
 import { type ISingleCarResponse } from "~/responses/ISignleCarResponse";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import getOffer from "~/api/getOffer";
 import AcceptOfferCard from "~/components/AcceptOfferCard";
+import { useToast } from "~/hooks/use-toast";
 
 const TitleValue = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -36,12 +37,27 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
     (car: ISingleCarResponse) => car.carId == Number(carId),
   );
 
-  const { data } = useQuery({
+  const { data, isError, error } = useQuery({
     queryKey: ["getOffer", carData?.carId, carData?.providerId],
     queryFn: ({ queryKey }) =>
       getOffer(Number(queryKey[1]), Number(queryKey[2])),
     enabled: shouldGetOffers,
   });
+
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (isError) {
+      if (shouldGetOffers) {
+        toast({
+          title: "Failed to generate an offer!",
+          description: `An error occurred while trying to generate the offer (${error?.message}). Try again later.`,
+          variant: "destructive",
+        });
+      }
+      setShouldGetOffers(false);
+    }
+  }, [isError, error, toast, shouldGetOffers]);
 
   // TODO: handle when car is undefined
   if (carData == undefined) {

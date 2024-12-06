@@ -8,6 +8,7 @@ import {
 import { Button } from "~/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import acceptOffer, { type IAcceptOfferParams } from "~/api/acceptOffer";
+import { useToast } from "~/hooks/use-toast";
 
 interface IAcceptOfferCardProps {
   offerId: number;
@@ -17,10 +18,22 @@ interface IAcceptOfferCardProps {
 }
 
 const AcceptOfferCard = (props: IAcceptOfferCardProps) => {
+  const { toast } = useToast();
+
   const mutation = useMutation({
     mutationFn: (values: IAcceptOfferParams) => acceptOffer(values),
-    onSuccess: () => alert("check your mail"),
-    onError: (error) => console.log(error),
+    onSuccess: () =>
+      toast({
+        title: "Offer accepted!",
+        description: "Please check your email to confirm rent.",
+        variant: "success",
+      }),
+    onError: (error) =>
+      toast({
+        title: "Failed to accept offer!",
+        description: `An error occured while trying to accept the offer (${error.message}). Try again later.`,
+        variant: "destructive",
+      }),
   });
 
   return (

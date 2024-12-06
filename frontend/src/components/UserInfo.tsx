@@ -5,14 +5,10 @@ import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { REACT_QUERY_USER_INFO_KEY } from "~/lib/consts";
 
 const UserInfo = () => {
-  const { data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: [REACT_QUERY_USER_INFO_KEY],
     queryFn: getUserInfo,
   });
-
-  if (error) {
-    console.log(error);
-  }
 
   if (!data) {
     return <LoginDialogButton />;
