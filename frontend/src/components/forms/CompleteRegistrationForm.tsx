@@ -28,6 +28,7 @@ import axios from "axios";
 import { type IAuthResponse } from "~/responses/IAuthResponse";
 import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   FirstName: z.string().min(2),
@@ -148,8 +149,8 @@ const CompleteRegistrationForm = () => {
       variant: "success",
     });
     setTimeout(() => {
-      router.push("/complete-registration");
-    }, 1500);
+      router.push("/browse");
+    }, 2000);
   }
 
   return (
@@ -204,7 +205,10 @@ const CompleteRegistrationForm = () => {
           name="DateOfLicenseObtained"
           label="Date of license obtained"
         />
-        <Button type="submit">Create profile</Button>
+        <Button type="submit" disabled={mutation.isPending}>
+          {mutation.isPending && <Loader2 className="animate-spin" />}
+          Create profile
+        </Button>
       </form>
     </Form>
   );

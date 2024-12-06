@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import getOffer from "~/api/getOffer";
 import AcceptOfferCard from "~/components/AcceptOfferCard";
 import { useToast } from "~/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 
 const TitleValue = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -37,7 +38,7 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
     (car: ISingleCarResponse) => car.carId == Number(carId),
   );
 
-  const { data, isError, error } = useQuery({
+  const { data, isError, error, isLoading } = useQuery({
     queryKey: ["getOffer", carData?.carId, carData?.providerId],
     queryFn: ({ queryKey }) =>
       getOffer(Number(queryKey[1]), Number(queryKey[2])),
@@ -104,7 +105,8 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
           providerId={data.providerId}
         />
       ) : (
-        <Button onClick={() => setShouldGetOffers(true)}>
+        <Button onClick={() => setShouldGetOffers(true)} disabled={isLoading}>
+          {isLoading && <Loader2 className="animate-spin" />}
           Generate offers
         </Button>
       )}

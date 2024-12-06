@@ -9,6 +9,7 @@ import { Button } from "~/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import acceptOffer, { type IAcceptOfferParams } from "~/api/acceptOffer";
 import { useToast } from "~/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 
 interface IAcceptOfferCardProps {
   offerId: number;
@@ -67,7 +68,9 @@ const AcceptOfferCard = (props: IAcceptOfferCardProps) => {
               providerId: props.providerId,
             })
           }
+          disabled={mutation.isPending}
         >
+          {mutation.isPending && <Loader2 className="animate-spin" />}
           Accept Offer
         </Button>
       </CardFooter>
