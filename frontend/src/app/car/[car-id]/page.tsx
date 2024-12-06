@@ -12,6 +12,7 @@ import { useToast } from "~/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { REACT_QUERY_USER_INFO_KEY } from "~/lib/consts";
 import { getUserInfo } from "~/api/getUserInfo";
+import { useRouter } from "next/navigation";
 
 const TitleValue = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -54,6 +55,8 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
     queryFn: getUserInfo,
   });
 
+  const router = useRouter();
+
   useEffect(() => {
     if (isError) {
       if (shouldGetOffers) {
@@ -67,9 +70,9 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
     }
   }, [isError, error, toast, shouldGetOffers]);
 
-  // TODO: handle when car is undefined
   if (carData == undefined) {
-    return <div>couldnt load car</div>;
+    router.push("/browse");
+    return <></>;
   }
 
   const handleOnGenerateOfferClick = () => {
