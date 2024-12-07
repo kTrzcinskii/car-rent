@@ -20,7 +20,7 @@ public class OfferService : IOfferService
             var request = new CarRentalExternalProviderCreateOfferDto
             {
                 CarId = carId,
-                Age = 18, // TODO: add age to user model
+                Age = user.Age,
                 YearsWithLicense = user.YearsWithLicense
             };
             var carRentalOfferDto = await _carRentalExternalProviderService.GetOffer(request);
