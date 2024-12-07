@@ -44,8 +44,6 @@ public class AuthController : ControllerBase
     [Authorize(Policy = "RegistrationOnly")]
     public async Task<IActionResult> FinishRegistration([FromBody] CreateUserDto createUserDto)
     {
-        // TODO: change into extension model
-        // https://stackoverflow.com/questions/70988115/what-is-the-right-way-to-retrieve-the-email-from-the-jwt-token
         var email = HttpContext?.User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         if (email == null)
         {

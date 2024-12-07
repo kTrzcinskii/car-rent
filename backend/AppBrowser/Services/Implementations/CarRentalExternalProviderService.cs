@@ -37,7 +37,30 @@ public class CarRentalExternalProviderService : IExternalProviderService
         {
             PropertyNameCaseInsensitive = true
         });
-        return cars == null ? [] : cars.Select((c) => CarDto.MapFromCarRentalProvider(c, GetProviderId())).ToList();
+        if (cars == null)
+        {
+            return [];
+        }
+        var carsDto = cars.Select((c) => CarDto.MapFromCarRentalProvider(c, GetProviderId())).ToList();
+        if (brandName == "" && modelName == "")
+        {
+            return carsDto;
+        }
+
+        if (brandName == "")
+        {
+            // filter by model name
+            return carsDto.Where(c => c.ModelName.Contains(modelName, StringComparison.CurrentCultureIgnoreCase)).ToList();
+        }
+        
+        if (modelName == "")
+        {
+            // filter by brand name
+            return carsDto.Where(c => c.BrandName.Contains(brandName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
+        
+        // filter by both
+        return carsDto.Where(c => c.BrandName.Contains(brandName, StringComparison.InvariantCultureIgnoreCase) && c.ModelName.Contains(modelName, StringComparison.InvariantCultureIgnoreCase)).ToList();
     }
 
     public async Task<CarRentalExternalProviderOfferDto> GetOffer(CarRentalExternalProviderCreateOfferDto createOfferDto)

@@ -24,5 +24,18 @@ namespace AppBrowser.Model
                 return years;
             }
         }
+
+        public int Age
+        {
+            get
+            {
+                var today = DateTime.Today;
+                int years = today.Year - DateOfBirth.Year;
+
+                if (today.AddYears(-years) < DateOfLicenseObtained.Date) --years;
+
+                return years;
+            }
+        }
     }
 }
