@@ -56,6 +56,9 @@ builder.Services.AddDbContext<DataContext>(
 
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IRentService, RentService>();
 
 var app = builder.Build();
 
