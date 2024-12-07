@@ -17,8 +17,8 @@ const BrowsePage = () => {
   const [modelName, setModelName] = useState(
     searchParams.get("modelName") ?? "",
   );
+  const [page, setPage] = useState(searchParams.get("page") ?? "0");
 
-  const page = searchParams.get("page") ?? "0";
   const params: ISearchCarsParams = { page, brandName, modelName };
   const { data, isLoading, isError } = useQuery({
     queryKey: [REACT_QUERY_SEARCH_KEY, params],
@@ -32,6 +32,7 @@ const BrowsePage = () => {
         defaultModelName={modelName}
         setBrandName={setBrandName}
         setModelName={setModelName}
+        setPage={setPage}
       />
       <div className="mx-auto my-10 flex w-4/5 flex-col items-center justify-center space-y-5 lg:w-[500px]">
         <CarsSearchResults

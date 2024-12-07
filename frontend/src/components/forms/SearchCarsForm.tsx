@@ -29,6 +29,7 @@ interface ISearchCarsFromProps {
   setModelName: Dispatch<SetStateAction<string>>;
   defaultBrandName: string;
   setBrandName: Dispatch<SetStateAction<string>>;
+  setPage: Dispatch<SetStateAction<string>>;
 }
 
 const SearchCarsForm = (props: ISearchCarsFromProps) => {
@@ -49,6 +50,9 @@ const SearchCarsForm = (props: ISearchCarsFromProps) => {
     params.set("brandName", values.BrandName ?? "");
     props.setModelName(values.ModelName ?? "");
     params.set("modelName", values.ModelName ?? "");
+    // Every time new seach query is made reset to first page
+    props.setPage("0");
+    params.set("page", "0");
     router.replace(`/browse?${params.toString()}`);
   };
 
