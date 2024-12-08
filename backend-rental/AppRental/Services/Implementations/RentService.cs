@@ -36,7 +36,7 @@ public class RentService : IRentService
 
     public async Task ConfirmRent(Rent rent)
     {
-        rent.Confirmed = true;
+        rent.Status = RentStatus.Confirmed;
         rent.StartDate = DateTime.UtcNow;
         rent.Offer.Car.Status = CarStatus.Rented;
         await _context.SaveChangesAsync();
