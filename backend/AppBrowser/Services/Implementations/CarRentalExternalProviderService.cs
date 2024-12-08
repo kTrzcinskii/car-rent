@@ -84,7 +84,7 @@ public class CarRentalExternalProviderService : IExternalProviderService
         CarRentalExternalProviderCreateRentDto createRentDto, int offerId)
     {
         string url =
-            $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/offer/create-rent?offerId={offerId}";
+            $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/rent/create-rent?offerId={offerId}";
         var json = JsonSerializer.Serialize(createRentDto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         var response = await _httpClient.PostAsync(url, content);

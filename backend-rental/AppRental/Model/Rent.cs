@@ -11,6 +11,15 @@ namespace AppRental.Model
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public bool Confirmed { get; set; } = false; 
+        public RentStatus Status { get; set; } = RentStatus.New; 
+        
+    }
+
+    public enum RentStatus
+    {
+        New, // Waiting for confirmation
+        Confirmed,
+        Returned, //  Waiting for employee approval
+        Finished
     }
 }
