@@ -30,6 +30,7 @@ const UserInfo = () => {
   const handleLogout = () => {
     sessionStorage.removeItem(TOKEN_KEY);
     queryClient.removeQueries({ queryKey: [REACT_QUERY_USER_INFO_KEY] });
+    router.push("/");
     router.refresh();
   };
 
@@ -47,7 +48,9 @@ const UserInfo = () => {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>Rents History</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/rents-history")}>
+              Rents History
+            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => handleLogout()}>
