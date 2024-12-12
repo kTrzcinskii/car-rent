@@ -8,5 +8,5 @@ public class Offer
     public decimal CostPerDay { get; set; }
     public decimal InsuranceCostPerDay { get; set; }
     public virtual Car Car { get; set; }
-
+    public DateTime ValidUntil { get; set; }
 }
