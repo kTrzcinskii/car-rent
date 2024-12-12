@@ -31,7 +31,8 @@ public class UserService : IUserService
             Email = email,
             Location = createUserDto.Location,
             DateOfBirth = createUserDto.DateOfBirth,
-            DateOfLicenseObtained = createUserDto.DateOfLicenseObtained
+            DateOfLicenseObtained = createUserDto.DateOfLicenseObtained,
+            Rents = []
         };
 
         _context.Users.Add(user);
