@@ -4,7 +4,7 @@ import SearchCarsForm from "~/components/forms/SearchCarsForm";
 import { searchCars, type ISearchCarsParams } from "~/api/searchCars";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CarsSearchResults from "../../components/CarsSearchResults";
 import { REACT_QUERY_SEARCH_KEY } from "~/lib/consts";
 
@@ -24,6 +24,10 @@ const BrowsePage = () => {
     queryKey: [REACT_QUERY_SEARCH_KEY, params],
     queryFn: ({ queryKey }) => searchCars(queryKey[1] as ISearchCarsParams),
   });
+
+  useEffect(() => {
+    setPage(searchParams.get("page") ?? "0");
+  }, [searchParams]);
 
   return (
     <main className="min-h-[calc(100vh-66px)] w-full py-14">
