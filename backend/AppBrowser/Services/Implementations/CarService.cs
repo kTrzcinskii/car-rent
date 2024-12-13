@@ -16,6 +16,6 @@ public class CarService : ICarService
     {
         var carRentalApiCars = await _carRentalExternalProviderService.SearchCars(brandName, modelName);
         // TODO: when we have more than one provider we should somehow merge results here
-        return carRentalApiCars;
+        return carRentalApiCars.Select(CarDto.FromCar).ToList();
     }
 }

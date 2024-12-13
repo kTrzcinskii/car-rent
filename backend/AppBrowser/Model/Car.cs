@@ -9,4 +9,5 @@ public class Car
     public string BrandName { get; set; }
     public string Location { get; set; }
     public int ProductionYear { get; set; }
+    public string? ImageUrl { get; set; } = null;
 }
