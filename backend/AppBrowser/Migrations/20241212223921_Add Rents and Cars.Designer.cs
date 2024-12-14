@@ -3,6 +3,7 @@ using System;
 using AppBrowser.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AppBrowser.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241212223921_Add Rents and Cars")]
+    partial class AddRentsandCars
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +43,6 @@ namespace AppBrowser.Migrations
                     b.Property<int>("ExternalCarId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("text");
@@ -62,44 +62,6 @@ namespace AppBrowser.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("AppBrowser.Model.Offer", b =>
-                {
-                    b.Property<int>("OfferId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OfferId"));
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("CostPerDay")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("ExternalOfferId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("InsuranceCostPerDay")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("ProviderId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("ValidUntil")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("OfferId");
-
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Offers");
-                });
-
             modelBuilder.Entity("AppBrowser.Model.Rent", b =>
                 {
                     b.Property<int>("RentId")
@@ -108,14 +70,20 @@ namespace AppBrowser.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RentId"));
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<int>("CarId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("CostPerDay")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("ExternalRentId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("OfferId")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("InsuranceCostPerDay")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("ProviderId")
                         .HasColumnType("integer");
@@ -126,12 +94,12 @@ namespace AppBrowser.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("RentId");
 
-                    b.HasIndex("OfferId");
+                    b.HasIndex("CarId");
 
                     b.HasIndex("UserId");
 
@@ -173,7 +141,7 @@ namespace AppBrowser.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AppBrowser.Model.Offer", b =>
+            modelBuilder.Entity("AppBrowser.Model.Rent", b =>
                 {
                     b.HasOne("AppBrowser.Model.Car", "Car")
                         .WithMany()
@@ -182,31 +150,16 @@ namespace AppBrowser.Migrations
                         .IsRequired();
 
                     b.HasOne("AppBrowser.Model.User", null)
-                        .WithMany("Offers")
-                        .HasForeignKey("UserId");
+                        .WithMany("Rents")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("AppBrowser.Model.Rent", b =>
-                {
-                    b.HasOne("AppBrowser.Model.Offer", "Offer")
-                        .WithMany()
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AppBrowser.Model.User", null)
-                        .WithMany("Rents")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Offer");
-                });
-
             modelBuilder.Entity("AppBrowser.Model.User", b =>
                 {
-                    b.Navigation("Offers");
-
                     b.Navigation("Rents");
                 });
 #pragma warning restore 612, 618

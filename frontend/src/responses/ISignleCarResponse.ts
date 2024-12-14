@@ -1,6 +1,5 @@
 export interface ISingleCarResponse {
   carId: number;
-  providerId: number;
   modelName: string;
   brandName: string;
   productionYear: number;

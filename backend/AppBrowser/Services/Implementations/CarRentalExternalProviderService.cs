@@ -1,7 +1,10 @@
 ﻿using System.Text;
 using System.Text.Json;
 using AppBrowser.DTOs;
+using AppBrowser.Infrastructure;
+using AppBrowser.Model;
 using AppBrowser.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppBrowser.Services.Implementations;
 
@@ -11,13 +14,17 @@ public class CarRentalExternalProviderService : IExternalProviderService
 {
     private readonly IConfiguration _configuration;
     private readonly HttpClient _httpClient;
+    private readonly DataContext _context;
+    private readonly ILogger<CarRentalExternalProviderService> _logger;
 
     private const int CarRentalExternalProviderId = 1;
     
-    public CarRentalExternalProviderService(IConfiguration configuration, HttpClient httpClient)
+    public CarRentalExternalProviderService(IConfiguration configuration, HttpClient httpClient, DataContext context, ILogger<CarRentalExternalProviderService> logger)
     {
         _configuration = configuration;
         _httpClient = httpClient;
+        _context = context;
+        _logger = logger;
     }
 
     public int GetProviderId()
@@ -25,7 +32,7 @@ public class CarRentalExternalProviderService : IExternalProviderService
         return CarRentalExternalProviderId;
     }
 
-    public async Task<List<CarDto>> SearchCars(string brandName, string modelName)
+    public async Task<List<Car>> SearchCars(string brandName, string modelName)
     {
         string url = $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")!}/api/cars";
         var response = await _httpClient.GetAsync(url);
@@ -41,26 +48,67 @@ public class CarRentalExternalProviderService : IExternalProviderService
         {
             return [];
         }
-        var carsDto = cars.Select((c) => CarDto.MapFromCarRentalProvider(c, GetProviderId())).ToList();
+        var carsDto = cars.Select((c) => CarFromProviderDto.MapFromCarRentalProvider(c, GetProviderId())).ToList();
+
+        var browserCars = await SyncCarsInDB(carsDto);
+        
         if (brandName == "" && modelName == "")
         {
-            return carsDto;
+            return browserCars;
         }
 
         if (brandName == "")
         {
             // filter by model name
-            return carsDto.Where(c => c.ModelName.Contains(modelName, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            return browserCars.Where(c => c.ModelName.Contains(modelName, StringComparison.CurrentCultureIgnoreCase)).ToList();
         }
         
         if (modelName == "")
         {
             // filter by brand name
-            return carsDto.Where(c => c.BrandName.Contains(brandName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            return browserCars.Where(c => c.BrandName.Contains(brandName, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
         
         // filter by both
-        return carsDto.Where(c => c.BrandName.Contains(brandName, StringComparison.InvariantCultureIgnoreCase) && c.ModelName.Contains(modelName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        return browserCars.Where(c => c.BrandName.Contains(brandName, StringComparison.InvariantCultureIgnoreCase) && c.ModelName.Contains(modelName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+    }
+
+    public async Task<List<Car>> SyncCarsInDB(List<CarFromProviderDto> cars)
+    {
+        var providerId = GetProviderId();
+        var browserCars = new List<Car>();
+        foreach (var car in cars)
+        {
+            var carInDb = await _context.Cars.FirstOrDefaultAsync(c => c.ExternalCarId == car.CarId && c.ProviderId == providerId);
+            if (carInDb != null)
+            {
+                // Car already in DB - update it to have current state
+                carInDb.BrandName = car.BrandName;
+                carInDb.ModelName = car.ModelName;
+                carInDb.Location = car.Localization;
+                carInDb.ProductionYear = car.ProductionYear;
+                carInDb.ImageUrl = car.ImageUrl;
+                browserCars.Add(carInDb);
+            }
+            else
+            {
+                // New car - need to insert it into DB
+                var newCar = new Car
+                {
+                    ExternalCarId = car.CarId,
+                    ProviderId = providerId,
+                    BrandName = car.BrandName,
+                    ModelName = car.ModelName,
+                    Location = car.Localization,
+                    ProductionYear = car.ProductionYear,
+                    ImageUrl = car.ImageUrl,
+                };
+                await _context.Cars.AddAsync(newCar);
+                browserCars.Add(newCar);
+            }
+        }
+        await _context.SaveChangesAsync();
+        return browserCars;
     }
 
     public async Task<CarRentalExternalProviderOfferDto> GetOffer(CarRentalExternalProviderCreateOfferDto createOfferDto)
@@ -68,7 +116,10 @@ public class CarRentalExternalProviderService : IExternalProviderService
         string url = $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/offer";
         var json = JsonSerializer.Serialize(createOfferDto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
+        
         var response = await _httpClient.PostAsync(url, content);
+        _logger.LogInformation("Response status code: {}", response.StatusCode);
+        
         if (!response.IsSuccessStatusCode) throw new HttpRequestException("Couldnt get offer from external provider");
         json = await response.Content.ReadAsStringAsync();
         var offerDto = JsonSerializer.Deserialize<CarRentalExternalProviderOfferDto>(json, new JsonSerializerOptions

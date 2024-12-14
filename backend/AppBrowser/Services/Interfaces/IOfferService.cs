@@ -5,7 +5,8 @@ namespace AppBrowser.Services.Interfaces;
 
 public interface IOfferService
 {
-    Task<OfferDto> GetOffer(User user, int carId, int providerId);
-
-    Task AcceptOffer(User user, int offerId, int providerId);
+    Task<Offer?> GetByIdAsync(int id);
+    OfferDto? FindValidOffer(User user, Car car);
+    Task<OfferDto> GetNewOffer(User user, Car car);
+    Task AcceptOffer(User user, Offer offer);
 }

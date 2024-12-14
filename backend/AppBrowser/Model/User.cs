@@ -7,11 +7,11 @@ namespace AppBrowser.Model
         public required string LastName { get; set; }
         public required string Email { get; set; }
         public required DateTime DateOfBirth { get; set; }
-
         public required DateTime DateOfLicenseObtained { get; set; }
-
         public required string Location { get; set; }
-
+        public virtual required List<Offer> Offers { get; set; }
+        public virtual required List<Rent> Rents { get; set; }
+        
         public int YearsWithLicense
         {
             get

@@ -20,7 +20,7 @@ builder.Services.AddScoped<CarRentalExternalProviderService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 
 builder.Services.AddDbContext<DataContext>(
-    opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
+    opt => opt.UseLazyLoadingProxies().UseNpgsql(builder.Configuration.GetConnectionString("Database")));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
