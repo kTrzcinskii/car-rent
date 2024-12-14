@@ -42,7 +42,7 @@ const CarPage = ({ params }: { params: { "car-id": string } }) => {
   );
 
   const { data, isError, error, isLoading } = useQuery({
-    queryKey: ["getOffer", carData?.carId, carData?.providerId],
+    queryKey: ["getOffer", carData?.carId],
     queryFn: ({ queryKey }) =>
       getOffer(Number(queryKey[1]), Number(queryKey[2])),
     enabled: shouldGetOffers,
