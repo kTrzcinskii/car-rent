@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AppBrowser.Services.Implementations;
 
+// TODO: create ICarRentalExternalProviderService interface
 // This is a service that will communicate with our own public API
 // Name might be changed later
 public class CarRentalExternalProviderService : IExternalProviderService
@@ -40,7 +41,7 @@ public class CarRentalExternalProviderService : IExternalProviderService
         if (!response.IsSuccessStatusCode) throw new HttpRequestException("Cannot fetch cars from car rental API");
         
         var json = await response.Content.ReadAsStringAsync();
-        var cars = JsonSerializer.Deserialize<List<CarRentalProviderCarDto>>(json, new JsonSerializerOptions
+        var cars = JsonSerializer.Deserialize<List<CarRentalExternalProviderCarDto>>(json, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         });
@@ -149,5 +150,35 @@ public class CarRentalExternalProviderService : IExternalProviderService
         if (rentDto == null)
             throw new HttpRequestException("Couldn't parse body from external provider");
         return rentDto;
+    }
+
+    public async Task<Rent.RentStatus> GetRentStatus(int rentId)
+    {
+        string url =
+            $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/rent/status?rentId={rentId}";
+        var response = await _httpClient.GetAsync(url);
+        if (!response.IsSuccessStatusCode)
+            throw new HttpRequestException("Couldn't get rent status");
+        var json = await response.Content.ReadAsStreamAsync();
+        var rentStatusDto = JsonSerializer.Deserialize<CarRentalExternalProviderRentStatusDto>(json,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+        if (rentStatusDto == null)
+            throw new HttpRequestException("Couldn't parse body from external provider");
+        switch (rentStatusDto.Status)
+        {
+            case "New":
+                return Rent.RentStatus.WaitingForConfirmation;
+            case "Confirmed":
+                return Rent.RentStatus.Started;
+            case "Returned":
+                return Rent.RentStatus.WaitingForEmployeeApproval;
+            case "Finished":
+                return Rent.RentStatus.Finished;
+            default:
+                throw new HttpRequestException("Unknown rent status returned from external provider");
+        }
     }
 }

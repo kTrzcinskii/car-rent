@@ -18,6 +18,7 @@ builder.Services.AddScoped<IPaginationService, PaginationService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<CarRentalExternalProviderService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddScoped<IRentService, RentService>();
 
 builder.Services.AddDbContext<DataContext>(
     opt => opt.UseLazyLoadingProxies().UseNpgsql(builder.Configuration.GetConnectionString("Database")));
