@@ -41,4 +41,21 @@ public class RentService : IRentService
         rent.Offer.Car.Status = CarStatus.Rented;
         await _context.SaveChangesAsync();
     }
+
+    public async Task StartReturn(Rent rent, string carStateDescription)
+    {
+        rent.Status = RentStatus.Returned;
+        rent.Offer.Car.Status = CarStatus.Returned;
+        rent.ReturnDescription = carStateDescription;
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ConfirmReturn(Rent rent, int workerId)
+    {
+        rent.Status = RentStatus.Finished;
+        rent.Offer.Car.Status = CarStatus.Available;
+        rent.EndDate = DateTime.UtcNow;
+        rent.WorkerId = workerId;
+        await _context.SaveChangesAsync();
+    }
 }

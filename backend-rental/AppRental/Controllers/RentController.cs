@@ -71,4 +71,34 @@ public class RentController : ControllerBase
         var rentStatusDto = RentStatusDTO.FromRent(rent);
         return Ok(rentStatusDto);
     }
+
+    [HttpPut("start-return")]
+    public async Task<ActionResult> StartReturn(int rentId, string carStateDescription, List<IFormFile> photos)
+    {
+        var rent = await _rentService.GetByIdAsync(rentId);
+        if(rent == null)
+        {
+            return NotFound();
+        }
+        await _rentService.StartReturn(rent, carStateDescription);
+        // add user's photos here
+
+        return Ok();
+    }
+
+    [HttpPut("confirm-return")] // worker
+    public async Task<ActionResult> ConfirmReturn(int rentId, int workerId, List<IFormFile> photos)
+    {
+        var rent = await _rentService.GetByIdAsync(rentId);
+
+        if(rent == null) return NotFound();
+        if(rent.Status != RentStatus.Returned) return BadRequest();
+
+        await _rentService.ConfirmReturn(rent, workerId);
+        // add worker's photos here
+        await _emailService.SendBillingEmailAsync(rent);
+
+        return Ok(rentId);
+    }
+
 }
