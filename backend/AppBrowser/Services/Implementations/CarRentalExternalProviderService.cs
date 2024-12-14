@@ -15,14 +15,16 @@ public class CarRentalExternalProviderService : IExternalProviderService
     private readonly IConfiguration _configuration;
     private readonly HttpClient _httpClient;
     private readonly DataContext _context;
+    private readonly ILogger<CarRentalExternalProviderService> _logger;
 
     private const int CarRentalExternalProviderId = 1;
     
-    public CarRentalExternalProviderService(IConfiguration configuration, HttpClient httpClient, DataContext context)
+    public CarRentalExternalProviderService(IConfiguration configuration, HttpClient httpClient, DataContext context, ILogger<CarRentalExternalProviderService> logger)
     {
         _configuration = configuration;
         _httpClient = httpClient;
         _context = context;
+        _logger = logger;
     }
 
     public int GetProviderId()
@@ -114,7 +116,10 @@ public class CarRentalExternalProviderService : IExternalProviderService
         string url = $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/offer";
         var json = JsonSerializer.Serialize(createOfferDto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
+        
         var response = await _httpClient.PostAsync(url, content);
+        _logger.LogInformation("Response status code: {}", response.StatusCode);
+        
         if (!response.IsSuccessStatusCode) throw new HttpRequestException("Couldnt get offer from external provider");
         json = await response.Content.ReadAsStringAsync();
         var offerDto = JsonSerializer.Deserialize<CarRentalExternalProviderOfferDto>(json, new JsonSerializerOptions
