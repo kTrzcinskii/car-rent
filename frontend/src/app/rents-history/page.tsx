@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  REACT_QUERY_USER_INFO_KEY,
-  REACT_QUERY_GET_RENTS_KEY,
-} from "~/lib/consts";
+import { REACT_QUERY_USER_INFO_KEY } from "~/lib/consts";
 import { getUserInfo } from "~/api/getUserInfo";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
@@ -12,7 +9,6 @@ import { useToast } from "~/hooks/use-toast";
 import { useEffect, useState } from "react";
 import ErrorAlert from "~/components/ErrorAlert";
 import RentsHistory from "~/components/RentsHistory";
-import { getRents, type IGetRentsParams } from "~/api/getRents";
 
 const RentsHistoryPage = () => {
   const router = useRouter();
@@ -38,14 +34,6 @@ const RentsHistoryPage = () => {
       setIsAccessDenied(true);
     }
   }, [isUserDataLoading, userData, router, toast]);
-
-  const params: IGetRentsParams = { page: "0" };
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [REACT_QUERY_GET_RENTS_KEY, params],
-    queryFn: ({ queryKey }) => getRents(queryKey[1] as IGetRentsParams),
-  });
-
-  console.log(data);
 
   if (isUserDataLoading) {
     return (

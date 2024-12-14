@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import acceptOffer, { type IAcceptOfferParams } from "~/api/acceptOffer";
 import { useToast } from "~/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface IAcceptOfferCardProps {
   offerId: number;
@@ -20,15 +21,21 @@ interface IAcceptOfferCardProps {
 
 const AcceptOfferCard = (props: IAcceptOfferCardProps) => {
   const { toast } = useToast();
+  const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: (values: IAcceptOfferParams) => acceptOffer(values),
-    onSuccess: () =>
+    onSuccess: () => {
       toast({
         title: "Offer accepted!",
-        description: "Please check your email to confirm rent.",
+        description:
+          "Please check your email to confirm rent. You will be redirected to your rents history in a second...",
         variant: "success",
-      }),
+      });
+      setTimeout(() => {
+        router.push("/rents-history");
+      }, 1000);
+    },
     onError: (error) =>
       toast({
         title: "Failed to accept offer!",
