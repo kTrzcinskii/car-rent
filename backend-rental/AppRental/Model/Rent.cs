@@ -13,6 +13,10 @@ namespace AppRental.Model
 
         public RentStatus Status { get; set; } = RentStatus.New; 
         
+        public string? ReturnDescription { get; set; }
+        public int WorkerId { get; set; }
+
+        public string? WorkerNote { get; set; }
     }
 
     public enum RentStatus
