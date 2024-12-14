@@ -52,16 +52,23 @@ public class OfferController : ControllerBase
 
     [HttpPost("accept")]
     [Authorize]
-    public async Task<IActionResult> AcceptOffer([FromQuery] int offerId, [FromQuery] int providerId)
+    public async Task<IActionResult> AcceptOffer([FromQuery] int offerId)
     {
         var userInfo = _userService.GetUserInfoFromClaims(HttpContext.User.Claims);
         var user = await _userService.GetUserByEmailAsync(userInfo.Email);
         if (user == null)
         {
+            _logger.LogError("Cannot load user info from claims.");
             return BadRequest("Couldnt load user info");
         }
-
-        await _offerService.AcceptOffer(user, offerId, providerId);
+        var offer = await _offerService.GetByIdAsync(offerId);
+        if (offer == null || !user.Offers.Contains(offer))
+        {
+            _logger.LogError("Offer with it {} not found for user with id {}", offerId, user.UserId);
+            return NotFound("Offer not found");
+        }
+        
+        await _offerService.AcceptOffer(user, offer);
         return Ok();
     }
 }

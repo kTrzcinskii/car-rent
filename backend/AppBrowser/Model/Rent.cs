@@ -6,7 +6,7 @@ public class Rent
     public int ProviderId { get; set; }
     public int ExternalRentId { get; set; }
     public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public DateTime? EndDate { get; set; }
     public RentStatus Status { get; set; }
     public virtual Offer Offer { get; set; }
     

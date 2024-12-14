@@ -8,7 +8,7 @@ namespace AppBrowser.Services.Implementations;
 public class OfferService : IOfferService
 {
     // TODO: check if this is actually correct value
-    private readonly int OFFER_VALIDITY = 1;
+    private readonly int OFFER_VALIDITY = 20;
     
     private readonly DataContext _context;
     private readonly CarRentalExternalProviderService _carRentalExternalProviderService;
@@ -19,7 +19,13 @@ public class OfferService : IOfferService
         _context = context;
     }
 
-    
+
+    public async Task<Offer?> GetByIdAsync(int id)
+    {
+        var offer = await _context.Offers.FindAsync(id);
+        return offer;
+    }
+
     public OfferDto? FindValidOffer(User user, Car car)
     {
         var offer = user.Offers.FirstOrDefault(o => o.Car == car);
@@ -28,8 +34,7 @@ public class OfferService : IOfferService
             return null;
         }
 
-        var diff = DateTime.UtcNow - offer.ValidUntil;
-        if (diff.TotalMinutes > OFFER_VALIDITY)
+        if (!IsOfferValid(offer))
         {
             return null;
         }
@@ -72,9 +77,15 @@ public class OfferService : IOfferService
         return OfferDto.FromOffer(offer);
     }
 
-    public async Task AcceptOffer(User user, int offerId, int providerId)
+    public async Task AcceptOffer(User user, Offer offer)
     {
-        if (providerId == _carRentalExternalProviderService.GetProviderId())
+        if (!IsOfferValid(offer))
+        {
+            throw new BadHttpRequestException("Offer is no longer valid.");
+        }
+        
+        Rent rent;
+        if (offer.ProviderId == _carRentalExternalProviderService.GetProviderId())
         {
             var request = new CarRentalExternalProviderCreateRentDto
             {
@@ -82,11 +93,30 @@ public class OfferService : IOfferService
                 FirstName = user.FirstName,
                 LastName = user.LastName
             };
-            // TODO: maybe send it back to client?
-            // TODO: probably need to save it in browser db later on
-            var _ = await _carRentalExternalProviderService.AcceptOffer(request, offerId);
-            return;
+            var carRentalExternalProviderRentDto = await _carRentalExternalProviderService.AcceptOffer(request, offer.ExternalOfferId);
+
+            rent = new Rent
+            {
+                ProviderId = offer.ProviderId,
+                ExternalRentId = carRentalExternalProviderRentDto.RentId,
+                StartDate = DateTime.UtcNow,
+                Status = Rent.RentStatus.WaitingForConfirmation,
+                Offer = offer
+            };
         }
-        throw new ArgumentException("Unknown provider");
+        else
+        {
+            throw new ArgumentException("Unknown provider");
+        }
+
+        _context.Rents.Add(rent);
+        user.Rents.Add(rent);
+        await _context.SaveChangesAsync();
+    }
+
+    private bool IsOfferValid(Offer offer)
+    {
+        var diff = DateTime.UtcNow - offer.ValidUntil;
+        return diff.TotalMinutes <= OFFER_VALIDITY;
     }
 }
