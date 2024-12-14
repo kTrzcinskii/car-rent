@@ -14,8 +14,8 @@ import {
   CardContent,
   CardFooter,
   CardImage,
-} from "./ui/card";
-import { Button } from "./ui/button";
+} from "../ui/card";
+import { Button } from "../ui/button";
 
 type IStartedRentCardProps = ISingleRentResponse;
 
