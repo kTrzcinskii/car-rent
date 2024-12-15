@@ -20,7 +20,7 @@ public class RentService : IRentService
         return rent;
     }
 
-    public async Task<Rent> CreateRent(Offer offer, RentDTO rentDto)
+    public async Task<Rent> CreateRentAsync(Offer offer, RentDTO rentDto)
     {
         var rent = new Rent
         {
@@ -34,7 +34,7 @@ public class RentService : IRentService
         return rent;
     }
 
-    public async Task ConfirmRent(Rent rent)
+    public async Task ConfirmRentAsync(Rent rent)
     {
         rent.Status = RentStatus.Confirmed;
         rent.StartDate = DateTime.UtcNow;
@@ -42,7 +42,7 @@ public class RentService : IRentService
         await _context.SaveChangesAsync();
     }
 
-    public async Task StartReturn(Rent rent, string carStateDescription)
+    public async Task StartReturnAsync(Rent rent, string carStateDescription)
     {
         rent.Status = RentStatus.Returned;
         rent.Offer.Car.Status = CarStatus.Returned;
@@ -50,7 +50,7 @@ public class RentService : IRentService
         await _context.SaveChangesAsync();
     }
 
-    public async Task ConfirmReturn(Rent rent, int workerId)
+    public async Task ConfirmReturnAsync(Rent rent, int workerId)
     {
         rent.Status = RentStatus.Finished;
         rent.Offer.Car.Status = CarStatus.Available;

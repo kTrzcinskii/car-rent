@@ -6,9 +6,9 @@ namespace AppRental.Services.Interfaces;
 public interface IRentService
 {
     Task<Rent?> GetByIdAsync(int id);
-    Task<Rent> CreateRent(Offer offer, RentDTO rentDto);
+    Task<Rent> CreateRentAsync(Offer offer, RentDTO rentDto);
 
-    Task ConfirmRent(Rent rent);
-    Task StartReturn(Rent rent, string carStateDescription);
-    Task ConfirmReturn(Rent rent, int workerId);
+    Task ConfirmRentAsync(Rent rent);
+    Task StartReturnAsync(Rent rent, string carStateDescription);
+    Task ConfirmReturnAsync(Rent rent, int workerId);
 }
