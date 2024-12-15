@@ -25,4 +25,10 @@ public class CarService : ICarService
         var cars = await _context.Cars.Where(car => car.Status == CarStatus.Available).ToListAsync();
         return cars;
     }
+
+    public async Task<List<Car>> GetAllCarsInUseAsync()
+    {
+        var cars = await _context.Cars.Where(car => car.Status != CarStatus.Available).ToListAsync();
+        return cars;
+    }
 }

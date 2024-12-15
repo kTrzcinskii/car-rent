@@ -6,4 +6,5 @@ public interface ICarService
 {
     Task<Car?> GetByIdAsync(int id);
     Task<List<Car>> GetAllCarsAsync();
+    Task<List<Car>> GetAllCarsInUseAsync();
 }

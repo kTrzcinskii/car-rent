@@ -9,6 +9,6 @@ public interface IRentService
     Task<Rent> CreateRentAsync(Offer offer, RentDTO rentDto);
 
     Task ConfirmRentAsync(Rent rent);
-    Task StartReturnAsync(Rent rent, string carStateDescription);
-    Task ConfirmReturnAsync(Rent rent, int workerId);
+    Task StartReturnAsync(Rent rent);
+    Task ConfirmReturnAsync(Rent rent, string workerId);
 }

@@ -6,18 +6,22 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Azure;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddIdentityCore<IdentityUser>().AddEntityFrameworkStores<DataContext>();
+
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = "Workers";
+    options.DefaultChallengeScheme = "Workers";
 })
-.AddJwtBearer(options =>
+.AddJwtBearer("EmailLink", options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -45,6 +49,38 @@ builder.Services.AddAuthentication(options =>
             return Task.CompletedTask;
         }
     };
+})
+.AddJwtBearer("Workers", options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!)),
+
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+
+    // No special token retrieval logic; defaults to the Authorization header
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.DefaultPolicy = new AuthorizationPolicyBuilder("Workers")
+        .RequireAuthenticatedUser()
+        .Build();
+        
+    options.AddPolicy("EmailLink", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.AuthenticationSchemes.Add("EmailLink");
+    });
 });
 
 // Add services to the container.
@@ -87,10 +123,11 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
     await context.Database.MigrateAsync();
     if (app.Environment.IsDevelopment())
     {
-        await Seed.SeedData(context);
+        await Seed.SeedData(context, userManager);
     }
 }
 catch (Exception ex)

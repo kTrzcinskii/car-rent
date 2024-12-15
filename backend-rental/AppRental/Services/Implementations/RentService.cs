@@ -42,15 +42,14 @@ public class RentService : IRentService
         await _context.SaveChangesAsync();
     }
 
-    public async Task StartReturnAsync(Rent rent, string carStateDescription)
+    public async Task StartReturnAsync(Rent rent)
     {
         rent.Status = RentStatus.Returned;
         rent.Offer.Car.Status = CarStatus.Returned;
-        rent.ReturnDescription = carStateDescription;
         await _context.SaveChangesAsync();
     }
 
-    public async Task ConfirmReturnAsync(Rent rent, int workerId)
+    public async Task ConfirmReturnAsync(Rent rent, string workerId)
     {
         rent.Status = RentStatus.Finished;
         rent.Offer.Car.Status = CarStatus.Available;
