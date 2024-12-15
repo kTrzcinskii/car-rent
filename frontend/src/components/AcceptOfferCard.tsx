@@ -72,7 +72,6 @@ const AcceptOfferCard = (props: IAcceptOfferCardProps) => {
           onClick={() =>
             mutation.mutate({
               offerId: props.offerId,
-              providerId: props.providerId,
             })
           }
           disabled={mutation.isPending}
