@@ -1,5 +1,6 @@
 ﻿using AppBrowser.DTOs;
 using AppBrowser.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppBrowser.Controllers;
@@ -21,6 +22,7 @@ public class RentController : ControllerBase
         _logger = logger;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<PaginatedDto<RentDto>>> GetRents([FromQuery] int page = 0,
         [FromQuery] int pageSize = 5)
@@ -35,5 +37,26 @@ public class RentController : ControllerBase
         var rentsDtos = await _rentService.FindUserRents(user);
         var response = _paginationService.GetPaginatedResponse(rentsDtos, page, pageSize);
         return Ok(response);
+    }
+
+    [Authorize]
+    [HttpPut("finish-rent")]
+    public async Task<IActionResult> FinishRent([FromQuery] int rentId)
+    {
+        var userInfo = _userService.GetUserInfoFromClaims(HttpContext.User.Claims);
+        var user = await _userService.GetUserByEmailAsync(userInfo.Email);
+        if (user == null)
+        {
+            _logger.LogError("Cannot load user info from claims.");
+            return BadRequest("Couldnt load user info");
+        }
+        var rent = await _rentService.GetByIdAsync(rentId);
+        if (rent == null || !user.Rents.Contains(rent))
+        {
+            _logger.LogError("Rent with id {} not found", rentId);
+            return NotFound("Rent not found");
+        }
+        await _rentService.StartRentReturnAsync(rent);
+        return Ok();
     }
 }

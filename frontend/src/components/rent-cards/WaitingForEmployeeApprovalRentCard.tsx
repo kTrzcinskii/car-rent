@@ -5,7 +5,6 @@ import {
   Currency,
   Shield,
   PiggyBank,
-  Loader2,
 } from "lucide-react";
 import { type ISingleRentResponse } from "~/responses/ISingleRentResponse";
 import {
@@ -13,18 +12,15 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  CardFooter,
   CardImage,
+  CardFooter,
 } from "../ui/card";
-import { Button } from "../ui/button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { type IFinishRentParams, finishRent } from "../../api/finishRent";
-import { useToast } from "~/hooks/use-toast";
-import { REACT_QUERY_GET_RENTS_KEY } from "~/lib/consts";
 
-type IStartedRentCardProps = ISingleRentResponse;
+type IWaitingForEmployeeApprovalRentCardProps = ISingleRentResponse;
 
-const StartedRentCard = (props: IStartedRentCardProps) => {
+const WaitingForEmployeeApprovalRentCard = (
+  props: IWaitingForEmployeeApprovalRentCardProps,
+) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
   };
@@ -36,30 +32,6 @@ const StartedRentCard = (props: IStartedRentCardProps) => {
   );
   const totalCost = days * props.costPerDay;
   const totalInsurance = days * props.insuranceCostPerDay;
-
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: (values: IFinishRentParams) => finishRent(values),
-    onSuccess: async () => {
-      toast({
-        title: "Rent finished!",
-        description:
-          "Now you need to wait for car provider employee to approve your requeset.",
-        variant: "success",
-      });
-      await queryClient.invalidateQueries({
-        queryKey: [REACT_QUERY_GET_RENTS_KEY],
-      });
-    },
-    onError: (error) =>
-      toast({
-        title: "Failed to finish rent!",
-        description: `An error occured while trying to finish the rent (${error.message}). Try again later.`,
-        variant: "destructive",
-      }),
-  });
 
   return (
     <Card className="w-full max-w-md">
@@ -115,20 +87,15 @@ const StartedRentCard = (props: IStartedRentCardProps) => {
           </div>
         </div>
 
-        <CardFooter className="mt-auto pt-4">
-          <Button
-            variant="secondary"
-            className="w-full bg-sky-400 text-white transition-colors duration-200 hover:bg-sky-500 active:bg-sky-600"
-            onClick={() => mutation.mutate({ rentId: props.rentId })}
-            disabled={mutation.isPending}
-          >
-            {mutation.isPending && <Loader2 className="animate-spin" />}
-            Finish rent
-          </Button>
+        <CardFooter className="pt-4">
+          <p className="flex items-center gap-2 font-semibold">
+            <span className="mr-3 inline-block h-2 w-2 animate-pulse rounded-full bg-gray-400"></span>
+            Wait for car provider employee to check your return.
+          </p>
         </CardFooter>
       </CardContent>
     </Card>
   );
 };
 
-export default StartedRentCard;
+export default WaitingForEmployeeApprovalRentCard;

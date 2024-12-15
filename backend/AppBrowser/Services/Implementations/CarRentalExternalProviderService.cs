@@ -181,4 +181,13 @@ public class CarRentalExternalProviderService : IExternalProviderService
                 throw new HttpRequestException("Unknown rent status returned from external provider");
         }
     }
+
+    public async Task StartRentReturn(int rentId)
+    {
+        string url =
+            $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/rent/start-return?rentId={rentId}";
+        var response = await _httpClient.PutAsync(url, null);
+        if (!response.IsSuccessStatusCode)
+            throw new HttpRequestException("Couldn't start rent return");
+    }
 }
