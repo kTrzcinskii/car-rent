@@ -17,6 +17,12 @@ public class RentService : IRentService
     }
 
 
+    public async Task<Rent?> GetByIdAsync(int id)
+    {
+        var rent = await _context.Rents.FindAsync(id);
+        return rent;
+    }
+
     public async Task<List<RentDto>> FindUserRents(User user)
     {
         foreach (var rent in user.Rents)
@@ -40,5 +46,17 @@ public class RentService : IRentService
         await _context.SaveChangesAsync();
         
         return user.Rents.Select(RentDto.FromRent).ToList();
+    }
+
+    public async Task StartRentReturnAsync(Rent rent)
+    {
+        if (rent.ProviderId == _carRentalExternalProviderService.GetProviderId())
+        {
+           await _carRentalExternalProviderService.StartRentReturn(rent.ExternalRentId);
+        }
+        else
+        {
+            throw new ArgumentException("Unknown provider id");
+        }
     }
 }
