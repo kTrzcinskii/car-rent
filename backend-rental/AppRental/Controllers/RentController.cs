@@ -45,10 +45,15 @@ public class RentController : ControllerBase
         return Ok(new {RentId = rent.Id});
     }
 
-    [Authorize]
+    [Authorize(Policy = "EmailLink")]
     [HttpGet("confirm-rent")]
-    public async Task<IActionResult> ConfirmRent(int rentId)
+    public async Task<IActionResult> ConfirmRent()
     {
+        var rentIdClaim = User.Claims.FirstOrDefault(c => c.Type == "rentId")?.Value;
+        if(rentIdClaim == null) return Unauthorized("No rentId in token's Claims.");
+        var rentId = Convert.ToInt32(rentIdClaim);
+        
+
         var rent = await _rentService.GetByIdAsync(rentId);
         _logger.LogInformation("Rent id: {}", rent?.Id);
             
@@ -95,13 +100,13 @@ public class RentController : ControllerBase
         var rent = await _rentService.GetByIdAsync(rentId);
 
         if(rent == null) return NotFound();
-        //if(rent.Status != RentStatus.Returned) return BadRequest();
+        if(rent.Status != RentStatus.Returned) return BadRequest();
 
         await _rentService.ConfirmReturnAsync(rent, workerId);
         await _photoService.AddPhotosToAzureAsync(rent, photos);
         await _emailService.SendBillingEmailAsync(rent);
 
-        return Ok(rentId);
+        return Ok();
     }
 
 }

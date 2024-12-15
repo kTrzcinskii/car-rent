@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddJwtBearer(options =>
+.AddJwtBearer("EmailLink", options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -45,6 +45,15 @@ builder.Services.AddAuthentication(options =>
             return Task.CompletedTask;
         }
     };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("EmailLink", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.AuthenticationSchemes.Add("EmailLink");
+    });
 });
 
 // Add services to the container.
