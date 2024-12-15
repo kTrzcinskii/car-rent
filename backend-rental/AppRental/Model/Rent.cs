@@ -12,6 +12,8 @@ namespace AppRental.Model
         public DateTime? EndDate { get; set; }
 
         public RentStatus Status { get; set; } = RentStatus.New; 
+
+        public List<string>? PhotoUrls { get; set; }
         
         public string? ReturnDescription { get; set; }
         public int WorkerId { get; set; }

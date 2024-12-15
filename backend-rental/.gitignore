@@ -481,3 +481,5 @@ $RECYCLE.BIN/
 
 # Docker
 .containers/
+
+appsettings.Development.json
