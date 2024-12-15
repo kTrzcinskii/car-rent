@@ -1,6 +1,6 @@
 ﻿namespace AppBrowser.DTOs;
 
-public class CarRentalProviderCarDto
+public class CarRentalExternalProviderCarDto
 {
     public int Id { get; set; }
     public string Brand { get; set; }

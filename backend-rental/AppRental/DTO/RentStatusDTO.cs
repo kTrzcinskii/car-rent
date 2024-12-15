@@ -4,13 +4,13 @@ namespace AppRental.DTO;
 
 public class RentStatusDTO
 {
-    public required string status;
+    public required string Status { get; set; }
 
     public static RentStatusDTO FromRent(Rent rent)
     {
         return new RentStatusDTO
         {
-            status = rent.Status.ToString()
+            Status = rent.Status.ToString()
         };
     }
 }

@@ -10,16 +10,16 @@ public class CarFromProviderDto
     public string? ImageUrl { get; set; }
     public string Localization { get; set; }
 
-    public static CarFromProviderDto MapFromCarRentalProvider(CarRentalProviderCarDto carRentalProviderCarDto, int providerId)
+    public static CarFromProviderDto MapFromCarRentalProvider(CarRentalExternalProviderCarDto carRentalExternalProviderCarDto, int providerId)
     {
         return new CarFromProviderDto
         {
-            CarId = carRentalProviderCarDto.Id,
+            CarId = carRentalExternalProviderCarDto.Id,
             ProviderId = providerId, 
-            BrandName = carRentalProviderCarDto.Brand,
-            ModelName = carRentalProviderCarDto.Model,
-            Localization = carRentalProviderCarDto.Localization,
-            ProductionYear = carRentalProviderCarDto.ProductionYear,
+            BrandName = carRentalExternalProviderCarDto.Brand,
+            ModelName = carRentalExternalProviderCarDto.Model,
+            Localization = carRentalExternalProviderCarDto.Localization,
+            ProductionYear = carRentalExternalProviderCarDto.ProductionYear,
         };
     }
 }
