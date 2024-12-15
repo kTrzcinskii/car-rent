@@ -7,7 +7,7 @@ export interface IGetRentsParams {
 }
 
 export const getRents = async (params: IGetRentsParams) => {
-  const url = `${API_BASE_URL}/rent?page=${params.page}`;
+  const url = `${API_BASE_URL}/rent?page=${params.page}&pageSize=100`;
   const token = sessionStorage.getItem(TOKEN_KEY);
   const response = await axios.get<IRentsListReponse>(url, {
     headers: {

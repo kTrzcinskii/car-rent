@@ -13,11 +13,14 @@ import {
   CardTitle,
   CardContent,
   CardImage,
+  CardFooter,
 } from "../ui/card";
 
-type IFinishedRentCardProps = ISingleRentResponse;
+type IWaitingForEmployeeApprovalRentCardProps = ISingleRentResponse;
 
-const FinishedRentCard = (props: IFinishedRentCardProps) => {
+const WaitingForEmployeeApprovalRentCard = (
+  props: IWaitingForEmployeeApprovalRentCardProps,
+) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
   };
@@ -83,9 +86,16 @@ const FinishedRentCard = (props: IFinishedRentCardProps) => {
             <span>Total: ${(totalCost + totalInsurance).toFixed(2)}</span>
           </div>
         </div>
+
+        <CardFooter className="pt-4">
+          <p className="flex items-center gap-2 font-semibold">
+            <span className="mr-3 inline-block h-2 w-2 animate-pulse rounded-full bg-gray-400"></span>
+            Wait for car provider employee to check your return.
+          </p>
+        </CardFooter>
       </CardContent>
     </Card>
   );
 };
 
-export default FinishedRentCard;
+export default WaitingForEmployeeApprovalRentCard;

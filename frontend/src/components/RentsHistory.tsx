@@ -8,6 +8,8 @@ import WaitingForConfirmationRentCard from "./rent-cards/WaitingForConfirmationR
 import { Tooltip, TooltipContent, TooltipProvider } from "./ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Info } from "lucide-react";
+import WaitingForEmployeeApprovalRentCard from "./rent-cards/WaitingForEmployeeApprovalRentCard";
+import FinishedRentCard from "./rent-cards/FinishedRentCard";
 
 interface IRentGroupContainerProps {
   children: ReactNode;
@@ -41,6 +43,7 @@ const RentGroupContainer = (props: IRentGroupContainerProps) => {
 };
 
 const RentsHistory = () => {
+  // TODO: pagination
   const params: IGetRentsParams = { page: "0" };
   const { data, isLoading, isError } = useQuery({
     queryKey: [REACT_QUERY_GET_RENTS_KEY, params],
@@ -66,6 +69,10 @@ const RentsHistory = () => {
     (rent) => rent.status === "WaitingForConfirmation",
   );
   const startedRents = data?.data.filter((rent) => rent.status === "Started");
+  const waitingForEmployeeApprovalRents = data?.data.filter(
+    (rent) => rent.status === "WaitingForEmployeeApproval",
+  );
+  const finishedRents = data?.data.filter((rent) => rent.status === "Finished");
 
   return (
     <div className="my-10 flex w-full flex-col items-center justify-center space-y-8 lg:space-y-12">
@@ -83,6 +90,24 @@ const RentsHistory = () => {
       >
         {startedRents?.map((rent) => {
           return <StartedRentCard {...rent} key={rent.rentId} />;
+        })}
+      </RentGroupContainer>
+      <RentGroupContainer
+        text="Waiting for employee approval"
+        additionalInfo="Rents that were finished by user but not yet approved by car provider employee."
+      >
+        {waitingForEmployeeApprovalRents?.map((rent) => {
+          return (
+            <WaitingForEmployeeApprovalRentCard {...rent} key={rent.rentId} />
+          );
+        })}
+      </RentGroupContainer>
+      <RentGroupContainer
+        text="Finished"
+        additionalInfo="Rents that were finished by user and approved by car provider employee."
+      >
+        {finishedRents?.map((rent) => {
+          return <FinishedRentCard {...rent} key={rent.rentId} />;
         })}
       </RentGroupContainer>
     </div>
