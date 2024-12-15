@@ -5,6 +5,7 @@ import {
   Currency,
   Shield,
   PiggyBank,
+  Loader2,
 } from "lucide-react";
 import { type ISingleRentResponse } from "~/responses/ISingleRentResponse";
 import {
@@ -16,6 +17,10 @@ import {
   CardImage,
 } from "../ui/card";
 import { Button } from "../ui/button";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { type IFinishRentParams, finishRent } from "../../api/finishRent";
+import { useToast } from "~/hooks/use-toast";
+import { REACT_QUERY_GET_RENTS_KEY } from "~/lib/consts";
 
 type IStartedRentCardProps = ISingleRentResponse;
 
@@ -31,6 +36,30 @@ const StartedRentCard = (props: IStartedRentCardProps) => {
   );
   const totalCost = days * props.costPerDay;
   const totalInsurance = days * props.insuranceCostPerDay;
+
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (values: IFinishRentParams) => finishRent(values),
+    onSuccess: async () => {
+      toast({
+        title: "Rent finished!",
+        description:
+          "Now you need to wait for car provider employee to approve your requeset.",
+        variant: "success",
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [REACT_QUERY_GET_RENTS_KEY],
+      });
+    },
+    onError: (error) =>
+      toast({
+        title: "Failed to finish rent!",
+        description: `An error occured while trying to finish the rent (${error.message}). Try again later.`,
+        variant: "destructive",
+      }),
+  });
 
   return (
     <Card className="w-full max-w-md">
@@ -90,8 +119,10 @@ const StartedRentCard = (props: IStartedRentCardProps) => {
           <Button
             variant="secondary"
             className="w-full bg-sky-400 text-white transition-colors duration-200 hover:bg-sky-500 active:bg-sky-600"
-            onClick={() => console.log("TODO")}
+            onClick={() => mutation.mutate({ rentId: props.rentId })}
+            disabled={mutation.isPending}
           >
+            {mutation.isPending && <Loader2 className="animate-spin" />}
             Finish rent
           </Button>
         </CardFooter>
