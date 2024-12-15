@@ -81,22 +81,25 @@ public class RentController : ControllerBase
     }
 
     [HttpPut("start-return")]
-    public async Task<ActionResult> StartReturn([FromForm]int rentId, [FromForm]string carStateDescription, List<IFormFile> photos)
+    public async Task<ActionResult> StartReturn([FromQuery]int rentId)
     {
         var rent = await _rentService.GetByIdAsync(rentId);
         if(rent == null)
         {
             return NotFound();
         }
-        await _rentService.StartReturnAsync(rent, carStateDescription);
-        await _photoService.AddPhotosToAzureAsync(rent, photos);
+        await _rentService.StartReturnAsync(rent);
 
         return Ok();
     }
 
-    [HttpPut("confirm-return")] // worker
-    public async Task<ActionResult> ConfirmReturn([FromForm]int rentId, [FromForm]int workerId, List<IFormFile> photos)
+    [Authorize]
+    [HttpPut("worker/confirm-return")]
+    public async Task<ActionResult> ConfirmReturn([FromForm]int rentId, List<IFormFile> photos)
     {
+        var workerId = User.Claims.FirstOrDefault(c => c.Type == "workerId")?.Value;
+        if(workerId == null) return Unauthorized("No workerId in token's Claims.");
+
         var rent = await _rentService.GetByIdAsync(rentId);
 
         if(rent == null) return NotFound();

@@ -1,11 +1,25 @@
 using AppRental.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace AppRental.Infrastructure
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context)
+        public static async Task SeedData(DataContext context, UserManager<IdentityUser> userManager)
         {
+            if(!userManager.Users.Any())
+            {
+                var workers = new List<IdentityUser>
+                {
+                    new IdentityUser{UserName = "worker1"},
+                    new IdentityUser{UserName = "worker2"},
+                    new IdentityUser{UserName = "worker3"},
+                };
+                foreach(var worker in workers)
+                {
+                    await userManager.CreateAsync(worker, "Pa$$w0rd");
+                }
+            }
             if (context.Cars.Any()) return;
 
             var cars = new List<Car>

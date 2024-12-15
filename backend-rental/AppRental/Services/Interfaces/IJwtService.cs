@@ -1,4 +1,4 @@
-using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace AppRental.Services.Interfaces
 {
@@ -6,5 +6,6 @@ namespace AppRental.Services.Interfaces
     {
         string GenerateRentConfirmationToken(int rentId);
         string GenerateLink(int rentId);
+        string GenerateWorkerToken(IdentityUser user);
     }
 }
