@@ -4,16 +4,15 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import UserInfo from "./UserInfo";
 
-const PATH_WITH_HIDDEN_NAV = [
-  "/complete-registration",
-  "/employee",
-  "/employee/login",
-];
+const PATH_WITH_HIDDEN_NAV = ["/complete-registration"];
 
 const Navbar = () => {
   const pathname = usePathname();
 
-  if (PATH_WITH_HIDDEN_NAV.includes(pathname)) {
+  if (
+    PATH_WITH_HIDDEN_NAV.includes(pathname) ||
+    pathname.includes("employee")
+  ) {
     return null;
   }
 

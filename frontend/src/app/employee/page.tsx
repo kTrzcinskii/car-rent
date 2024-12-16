@@ -8,6 +8,7 @@ import {
 } from "~/lib/consts";
 import { getEmployeeInfo } from "~/api/getEmployeeInfo";
 import { getEmployeeRentsInfo } from "~/api/getEmployeeRentsInfo";
+import EmployeeReturnCard from "~/components/EmployeeReturnCard";
 
 const EmployeeDashboard = () => {
   const router = useRouter();
@@ -32,7 +33,20 @@ const EmployeeDashboard = () => {
     return <></>;
   }
 
-  return <div>rents count: {data?.data.length}</div>;
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="my-6 text-4xl font-semibold">List of ongoing rents</h1>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {data?.data.map((rent) => {
+          return (
+            <div key={rent.rentId} className="w-full">
+              <EmployeeReturnCard {...rent} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default EmployeeDashboard;
