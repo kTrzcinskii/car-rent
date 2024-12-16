@@ -4,7 +4,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import UserInfo from "./UserInfo";
 
-const PATH_WITH_HIDDEN_NAV = ["/complete-registration"];
+const PATH_WITH_HIDDEN_NAV = [
+  "/complete-registration",
+  "/employee",
+  "/employee/login",
+];
 
 const Navbar = () => {
   const pathname = usePathname();
