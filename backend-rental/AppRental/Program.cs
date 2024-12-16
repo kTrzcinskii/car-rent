@@ -103,6 +103,20 @@ builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IRentService, RentService>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+            policy.WithOrigins(allowedOrigins!)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -116,6 +130,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowFrontend");
 
 // updates or creates the database on startup
 using var scope = app.Services.CreateScope();
