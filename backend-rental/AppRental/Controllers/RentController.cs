@@ -92,7 +92,7 @@ public class RentController : ControllerBase
 
         return Ok();
     }
-
+    
     [Authorize]
     [HttpPut("worker/confirm-return")]
     public async Task<ActionResult> ConfirmReturn([FromForm]int rentId, List<IFormFile> photos)
