@@ -61,15 +61,15 @@ const EmployeeRentDetails = (props: IEmployeeRentDetailsProps) => {
             <div className="flex items-center gap-2">
               <BanknoteIcon className="h-5 w-5 text-gray-500" />
               <div className="space-y-1">
-                <p>Base Rate: ${props.costPerDay}/day</p>
-                <p>Insurance: ${props.insuranceCostPerDay}/day</p>
+                <p>Base Rate: {props.costPerDay} PLN/day</p>
+                <p>Insurance: {props.insuranceCostPerDay} PLN/day</p>
                 <div className="my-2 h-px bg-gray-200" />
-                <p>Daily Total: ${totalDailyCost}</p>
+                <p>Daily Total: {totalDailyCost} PLN</p>
               </div>
             </div>
           </div>
           <p className="text-lg font-bold">
-            Total Cost ({numberOfDays} days): ${totalCost.toFixed(2)}
+            Total Cost ({numberOfDays} days): {totalCost.toFixed(2)} PLN
           </p>
         </div>
       </CardContent>

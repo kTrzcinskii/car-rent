@@ -68,22 +68,22 @@ const WaitingForEmployeeApprovalRentCard = (
           <div className="flex items-center gap-2">
             <Currency className="h-4 w-4" />
             <span className="font-medium">
-              Cost: ${totalCost.toFixed(2)} (${props.costPerDay.toFixed(2)} per
-              day)
+              Cost: {totalCost.toFixed(2)} PLN ({props.costPerDay.toFixed(2)}{" "}
+              PLN per day)
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             <Shield className="h-4 w-4" />
             <span className="font-medium">
-              Insurance: ${totalInsurance.toFixed(2)} ($
-              {props.insuranceCostPerDay.toFixed(2)} per day)
+              Insurance: {totalInsurance.toFixed(2)} PLN (
+              {props.insuranceCostPerDay.toFixed(2)} PLN per day)
             </span>
           </div>
 
           <div className="flex items-center gap-2 font-bold">
             <PiggyBank className="h-4 w-4" />{" "}
-            <span>Total: ${(totalCost + totalInsurance).toFixed(2)}</span>
+            <span>Total: {(totalCost + totalInsurance).toFixed(2)} PLN</span>
           </div>
         </div>
 
