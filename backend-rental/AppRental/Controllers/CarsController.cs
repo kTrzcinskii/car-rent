@@ -46,7 +46,7 @@ namespace AppRental.Controllers
             {
                 return BadRequest("There is no returned rent for provided car");
             }
-            return Ok(CarDetailsWorkerDTO.FromCar(car, rent.Id));
+            return Ok(CarDetailsWorkerDTO.FromCar(car, rent));
         }
 
     }
