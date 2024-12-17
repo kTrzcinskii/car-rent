@@ -1,6 +1,7 @@
 import { MapPinIcon, CalendarIcon, BanknoteIcon } from "lucide-react";
 import { type IEmployeeRentDetailsResponse } from "~/responses/IEmployeeRentDetailsResponse";
-import { Card, CardContent, CardImage } from "./ui/card";
+import { Card, CardContent, CardFooter, CardImage } from "./ui/card";
+import EmployeeConfirmReturnForm from "./forms/EmployeeConfirmReturnForm";
 
 type IEmployeeRentDetailsProps = IEmployeeRentDetailsResponse;
 
@@ -73,6 +74,9 @@ const EmployeeRentDetails = (props: IEmployeeRentDetailsProps) => {
           </p>
         </div>
       </CardContent>
+      <CardFooter>
+        <EmployeeConfirmReturnForm rentId={props.rentId} />
+      </CardFooter>
     </Card>
   );
 };

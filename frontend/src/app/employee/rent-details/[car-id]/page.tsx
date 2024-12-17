@@ -51,7 +51,7 @@ const RentDetailsPage = ({ params }: { params: { "car-id": string } }) => {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center space-y-5 bg-gray-50 p-4">
       <EmployeeRentDetails {...data} />
     </div>
   );

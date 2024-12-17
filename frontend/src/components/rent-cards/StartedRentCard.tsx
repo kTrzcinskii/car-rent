@@ -85,10 +85,7 @@ const StartedRentCard = (props: IStartedRentCardProps) => {
 
           <div className="flex items-center gap-2 text-muted-foreground">
             <CalendarDays className="h-4 w-4" />
-            <span>
-              {formatDate(props.startDate)} - ...
-              {props.endDate && ` To: ${formatDate(props.endDate)}`}
-            </span>
+            <span>{formatDate(props.startDate)} - ...</span>
           </div>
         </div>
 
