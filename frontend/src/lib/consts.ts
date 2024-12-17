@@ -7,3 +7,4 @@ export const EMPLOYEE_API_BASE_URL = `${process.env.NEXT_PUBLIC_EMPLOYEE_API_URL
 export const EMPLOYEE_TOKEN_KEY = "empoloyeeAuthToken";
 export const REACT_QUERY_EMPLOYEE_INFO_KEY = "employeeInfo";
 export const REACT_QUERY_EMPLOYEE_RENTS_INFO = "employeeRentsInfo";
+export const REACT_QUERY_EMPLOYEE_RENT_DETAILS = "employeeRentDetails";

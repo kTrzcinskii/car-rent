@@ -54,7 +54,7 @@ const EmployeeReturnCard = (props: IEmployeeReturnCardProps) => {
           {props.status === "Returned" && (
             <Button
               onClick={() =>
-                router.push(`/employee/rent-details/${props.rentId}`)
+                router.push(`/employee/rent-details/${props.carId}`)
               }
               className="ml-4"
             >
