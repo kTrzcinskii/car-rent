@@ -1,12 +1,14 @@
+export type RentStatus =
+  | "WaitingForConfirmation"
+  | "Started"
+  | "WaitingForEmployeeApproval"
+  | "Finished";
+
 export interface ISingleRentResponse {
   rentId: number;
   startDate: string;
   endDate?: string;
-  status:
-    | "WaitingForConfirmation"
-    | "Started"
-    | "WaitingForEmployeeApproval"
-    | "Finished";
+  status: RentStatus;
   costPerDay: number;
   insuranceCostPerDay: number;
   modelName: string;

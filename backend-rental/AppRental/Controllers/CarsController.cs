@@ -10,10 +10,12 @@ namespace AppRental.Controllers
     public class CarsController : ControllerBase
     {
         private readonly ICarService _carService;
+        private readonly IRentService _rentService;
         
-        public CarsController(ICarService carService)
+        public CarsController(ICarService carService, IRentService rentService)
         {
             _carService = carService;
+            _rentService = rentService;
         }
 
         [HttpGet]
@@ -28,9 +30,8 @@ namespace AppRental.Controllers
         [HttpGet("worker")]
         public async Task<ActionResult<List<CarWorkerDTO>>> GetCarsInUse()
         {
-            var cars = await _carService.GetAllCarsInUseAsync();
-            var workerCarDtos = cars.Select(CarWorkerDTO.FromCar).ToList();
-            return Ok(workerCarDtos);
+            var workerCarDtos = await _carService.GetAllCarsInUseAsync();
+            return Ok(new {data = workerCarDtos});
         }
 
         [Authorize]
@@ -40,7 +41,12 @@ namespace AppRental.Controllers
             var car = await _carService.GetByIdAsync(carId);
             if(car == null) return NotFound();
             if(car.Status != Model.CarStatus.Returned) return BadRequest("Details are only for returned cars.");
-            return Ok(CarDetailsWorkerDTO.FromCar(car));
+            var rent = await _rentService.GetReturnedRentForCar(car.Id);
+            if (rent == null)
+            {
+                return BadRequest("There is no returned rent for provided car");
+            }
+            return Ok(CarDetailsWorkerDTO.FromCar(car, rent));
         }
 
     }

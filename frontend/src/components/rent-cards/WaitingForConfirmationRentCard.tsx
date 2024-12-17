@@ -39,14 +39,14 @@ const WaitingForConfirmationRentCard = (
           <div className="flex items-center gap-2 text-gray-600">
             <Currency className="h-4 w-4" />
             <span className="font-medium">
-              Cost: ${props.costPerDay.toFixed(2)} per day
+              Cost: {props.costPerDay.toFixed(2)} PLN per day
             </span>
           </div>
 
           <div className="flex items-center gap-2 text-gray-600">
             <Shield className="h-4 w-4" />
             <span className="font-medium">
-              Insurance: ${props.insuranceCostPerDay.toFixed(2)} per day
+              Insurance: {props.insuranceCostPerDay.toFixed(2)} PLN per day
             </span>
           </div>
         </div>

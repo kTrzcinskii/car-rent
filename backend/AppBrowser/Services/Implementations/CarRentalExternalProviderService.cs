@@ -152,7 +152,7 @@ public class CarRentalExternalProviderService : IExternalProviderService
         return rentDto;
     }
 
-    public async Task<Rent.RentStatus> GetRentStatus(int rentId)
+    public async Task<CarRentalExternalProviderRentStatusDto> GetRentStatus(int rentId)
     {
         string url =
             $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/rent/status?rentId={rentId}";
@@ -167,19 +167,7 @@ public class CarRentalExternalProviderService : IExternalProviderService
             });
         if (rentStatusDto == null)
             throw new HttpRequestException("Couldn't parse body from external provider");
-        switch (rentStatusDto.Status)
-        {
-            case "New":
-                return Rent.RentStatus.WaitingForConfirmation;
-            case "Confirmed":
-                return Rent.RentStatus.Started;
-            case "Returned":
-                return Rent.RentStatus.WaitingForEmployeeApproval;
-            case "Finished":
-                return Rent.RentStatus.Finished;
-            default:
-                throw new HttpRequestException("Unknown rent status returned from external provider");
-        }
+        return rentStatusDto;
     }
 
     public async Task StartRentReturn(int rentId)

@@ -2,6 +2,7 @@
 using AppRental.Infrastructure;
 using AppRental.Model;
 using AppRental.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppRental.Services.Implementations;
 
@@ -17,6 +18,13 @@ public class RentService : IRentService
     public async Task<Rent?> GetByIdAsync(int id)
     {
         var rent = await _context.Rents.FindAsync(id);
+        return rent;
+    }
+
+    public async Task<Rent?> GetReturnedRentForCar(int carId)
+    {
+        var rent = await _context.Rents.FirstOrDefaultAsync((rent) =>
+            rent.Offer.Car.Id == carId && rent.Status == RentStatus.Returned);
         return rent;
     }
 

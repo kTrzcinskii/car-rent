@@ -9,7 +9,10 @@ const PATH_WITH_HIDDEN_NAV = ["/complete-registration"];
 const Navbar = () => {
   const pathname = usePathname();
 
-  if (PATH_WITH_HIDDEN_NAV.includes(pathname)) {
+  if (
+    PATH_WITH_HIDDEN_NAV.includes(pathname) ||
+    pathname.includes("employee")
+  ) {
     return null;
   }
 

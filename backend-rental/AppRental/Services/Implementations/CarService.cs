@@ -1,4 +1,5 @@
-﻿using AppRental.Infrastructure;
+﻿using AppRental.DTO;
+using AppRental.Infrastructure;
 using AppRental.Model;
 using AppRental.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -26,9 +27,12 @@ public class CarService : ICarService
         return cars;
     }
 
-    public async Task<List<Car>> GetAllCarsInUseAsync()
+    public async Task<List<CarWorkerDTO>> GetAllCarsInUseAsync()
     {
-        var cars = await _context.Cars.Where(car => car.Status != CarStatus.Available).ToListAsync();
+        var rents = await _context.Rents.Where(rent =>
+                rent.Status == RentStatus.Confirmed || rent.Status == RentStatus.Returned).Include(rent => rent.Offer)
+            .ThenInclude(offer => offer.Car).ToListAsync();
+        var cars = rents.Select((rent) => CarWorkerDTO.FromCar(rent.Offer.Car, rent.Id)).ToList();
         return cars;
     }
 }

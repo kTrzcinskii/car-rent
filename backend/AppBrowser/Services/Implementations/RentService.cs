@@ -27,21 +27,27 @@ public class RentService : IRentService
     {
         foreach (var rent in user.Rents)
         {
-            if (rent.Status == Rent.RentStatus.Finished)
-            {
-                // For now we assume that status can never be changed from finished to any other state
-                continue;
-            }
-            Rent.RentStatus currentStatus;
             if (rent.ProviderId == _carRentalExternalProviderService.GetProviderId())
             {
-                currentStatus = await _carRentalExternalProviderService.GetRentStatus(rent.ExternalRentId);
+                var rentStatusDto = await _carRentalExternalProviderService.GetRentStatus(rent.ExternalRentId);
+                Rent.RentStatus status = rentStatusDto.Status switch
+                {
+                    "New" => Rent.RentStatus.WaitingForConfirmation,
+                    "Confirmed" => Rent.RentStatus.Started,
+                    "Returned" => Rent.RentStatus.WaitingForEmployeeApproval,
+                    "Finished" => Rent.RentStatus.Finished,
+                    _ => throw new HttpRequestException("Unknown rent status returned from external provider")
+                };
+                rent.Status = status;
+                if (rentStatusDto.EndDate != null)
+                {
+                    rent.EndDate = rentStatusDto.EndDate;
+                }
             }
             else
             {
                 throw new ArgumentException("Unknown provider id");
             }
-            rent.Status = currentStatus;
         }
         await _context.SaveChangesAsync();
         
