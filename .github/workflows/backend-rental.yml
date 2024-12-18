@@ -29,6 +29,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Modify Development json with secrets
+        run: |
+          jq '.Jwt.Issuer = env.URL | .Jwt.Audience = env.URL | .Jwt.Secret = env.SECRET'
+          ./backend-rental/AppRental/appsettings.Development.json > tmp.json &&
+          mv tmp.json ./backend-rental/AppRental/appsettings.Development.json
+        env:
+            URL = ${{ secrets.backendRentalUrl }}
+            SECRET = ${{ secrets.backendRentalSecret }}
+
       - name: Build
         run: dotnet build ./backend-rental --configuration Release
 
