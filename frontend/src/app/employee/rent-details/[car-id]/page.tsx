@@ -13,6 +13,8 @@ import {
   getEmployeeRentDetails,
 } from "~/api/getEmployeeRentDetails";
 import EmployeeRentDetails from "~/components/EmployeeRentDetails";
+import { Loader2 } from "lucide-react";
+import ErrorAlert from "~/components/ErrorAlert";
 
 const RentDetailsPage = ({ params }: { params: { "car-id": string } }) => {
   const carId = params["car-id"];
@@ -23,6 +25,7 @@ const RentDetailsPage = ({ params }: { params: { "car-id": string } }) => {
     useQuery({
       queryKey: [REACT_QUERY_EMPLOYEE_INFO_KEY],
       queryFn: getEmployeeInfo,
+      retry: false,
     });
 
   const queryParams: IGetEmployeeRentDetailsProps = { carId: carId };
@@ -34,7 +37,11 @@ const RentDetailsPage = ({ params }: { params: { "car-id": string } }) => {
   });
 
   if (isEmployeeInfoLoading) {
-    return <div>loading employee info</div>;
+    return (
+      <div className="flex w-full items-center justify-center py-5">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
   }
 
   if (isEmployeeInfoError) {
@@ -43,11 +50,22 @@ const RentDetailsPage = ({ params }: { params: { "car-id": string } }) => {
   }
 
   if (isLoading || !data) {
-    return <div>loading message</div>;
+    return (
+      <div className="flex w-full items-center justify-center py-5">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
   }
 
   if (isError) {
-    return <div>error message</div>;
+    return (
+      <div className="w-full">
+        <ErrorAlert
+          title="Cannot load data"
+          message="There was a problem while loading data. Please try again later."
+        />
+      </div>
+    );
   }
 
   return (

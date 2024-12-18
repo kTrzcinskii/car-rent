@@ -5,6 +5,16 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = { distDir: "build", output: "standalone" };
+const config = {
+  distDir: "build",
+  output: "standalone",
+  images: {
+    remotePatterns: [
+      {
+        hostname: "carrentalpublicapiblob.blob.core.windows.net",
+      },
+    ],
+  },
+};
 
 export default config;

@@ -37,11 +37,11 @@ namespace AppRental.Services.Implementations
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public string GenerateLink(int rentId)
+        public string GenerateLink(int rentId, string baseUrl)
         {
             var token = GenerateRentConfirmationToken(rentId);
-            // TODO: generate this url dynamically
-            return $"https://localhost:5001/api/rent/confirm-rent?token={token}"; // hardcoded origin
+            var link = $"{baseUrl}/api/rent/confirm-rent?token={token}";
+            return link;
         }
 
         public string GenerateWorkerToken(IdentityUser user)

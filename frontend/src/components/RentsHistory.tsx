@@ -7,7 +7,7 @@ import { type ReactNode } from "react";
 import WaitingForConfirmationRentCard from "./rent-cards/WaitingForConfirmationRentCard";
 import { Tooltip, TooltipContent, TooltipProvider } from "./ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
-import { Info } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
 import WaitingForEmployeeApprovalRentCard from "./rent-cards/WaitingForEmployeeApprovalRentCard";
 import FinishedRentCard from "./rent-cards/FinishedRentCard";
 
@@ -51,7 +51,9 @@ const RentsHistory = () => {
   });
 
   if (isLoading) {
-    return <div>TODO: loading </div>;
+    <div className="flex w-full items-center justify-center py-5">
+      <Loader2 className="animate-spin" />
+    </div>;
   }
 
   if (isError) {

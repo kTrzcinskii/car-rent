@@ -39,7 +39,10 @@ public class RentController : ControllerBase
 
         var rent = await _rentService.CreateRentAsync(offer, rentDTO);
 
-        var confirmationLink = _jwtService.GenerateLink(rent.Id);
+        var request = HttpContext.Request;
+        var baseUrl = $"{request.Scheme}://{request.Host}";
+        
+        var confirmationLink = _jwtService.GenerateLink(rent.Id, baseUrl);
         await _emailService.SendRentConfirmationEmailAsync(rent.Email, confirmationLink);
 
         return Ok(new {RentId = rent.Id});
