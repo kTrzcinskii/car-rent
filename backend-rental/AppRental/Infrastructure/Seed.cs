@@ -32,7 +32,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 89,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Octavia-2013-thb.jpg"
                 },
                 new Car
                 {
@@ -42,7 +43,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 95,
-                    InsuranceCostPerDay = 25
+                    InsuranceCostPerDay = 25,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Octavia-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -52,7 +54,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Krakow",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 30
+                    InsuranceCostPerDay = 30,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Octavia-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -62,7 +65,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Rented,
                     Location = "Warsaw",
                     CostPerDay = 85,
-                    InsuranceCostPerDay = 25
+                    InsuranceCostPerDay = 25,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -72,7 +76,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Returned,
                     Location = "Warsaw",
                     CostPerDay = 85,
-                    InsuranceCostPerDay = 25
+                    InsuranceCostPerDay = 25,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -82,7 +87,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Rented,
                     Location = "Krakow",
                     CostPerDay = 85,
-                    InsuranceCostPerDay = 25
+                    InsuranceCostPerDay = 25,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -92,7 +98,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Returned,
                     Location = "Krakow",
                     CostPerDay = 85,
-                    InsuranceCostPerDay = 25
+                    InsuranceCostPerDay = 25,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -102,7 +109,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 75,
-                    InsuranceCostPerDay = 10
+                    InsuranceCostPerDay = 10,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-Camry-2012-thb.jpg"
                 },
                 new Car
                 {
@@ -112,7 +120,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Krakow",
                     CostPerDay = 69,
-                    InsuranceCostPerDay = 10
+                    InsuranceCostPerDay = 10,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-Yaris-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -122,7 +131,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Rented,
                     Location = "Warsaw",
                     CostPerDay = 109,
-                    InsuranceCostPerDay = 30
+                    InsuranceCostPerDay = 30,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-RAV4_Hybrid_EU-Version-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -132,7 +142,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 65,
-                    InsuranceCostPerDay = 15
+                    InsuranceCostPerDay = 15,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Hyundai-i20-2013-thb.jpg"
                 },
                 new Car
                 {
@@ -142,7 +153,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 70,
-                    InsuranceCostPerDay = 15
+                    InsuranceCostPerDay = 15,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Hyundai-i20-2015-thb.jpg"
                 },
                 new Car
                 {
@@ -152,7 +164,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Warsaw",
                     CostPerDay = 80,
-                    InsuranceCostPerDay = 15
+                    InsuranceCostPerDay = 15,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Hyundai-i20-2021-thb.jpg"
                 },
                 new Car
                 {
@@ -162,7 +175,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-Corolla_EU-Version-2014-thb.jpg"
                 },
                 new Car
                 {
@@ -172,7 +186,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Ford-F-Series_Super_Duty-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -182,7 +197,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Honda-Civic_Sedan-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -192,7 +208,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Volkswagen-Tiguan-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -202,7 +219,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Volkswagen-Golf-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -212,7 +230,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Honda-CR-V-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -222,7 +241,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Volkswagen-Polo-2018-thb.jpg"
                 },
                 new Car
                 {
@@ -232,7 +252,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-Camry-2018-thb.jpg"
                 },
                 new Car
                 {
@@ -242,7 +263,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Chevrolet-Silverado-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -252,7 +274,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Opel-Astra-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -262,19 +285,8 @@ namespace AppRental.Infrastructure
                     Status = CarStatus.Available,
                     Location = "Szczecin",
                     CostPerDay = 99,
-                    InsuranceCostPerDay = 20
-                },
-                // TODO: remove this, only for testing imageUrl
-                new Car
-                {
-                    Brand = "Nissan",
-                    Model = "Juke",
-                    ProductionYear = 2024,
-                    Status = CarStatus.Available,
-                    Location = "Olsztyn",
-                    CostPerDay = 200,
-                    InsuranceCostPerDay = 300,
-                    ImageUrl = "https://madmobil.pl/wp-content/uploads/2018/07/426220253_Nissan_Juke_z_roku_modelowego_2018_-_personalizacja_nadwozia_w_kolorze.jpg"
+                    InsuranceCostPerDay = 20,
+                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Mazda-3-2017-thb.jpg"
                 }
             };
 
