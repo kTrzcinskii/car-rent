@@ -9,6 +9,7 @@ import {
 import { getEmployeeInfo } from "~/api/getEmployeeInfo";
 import { getEmployeeRentsInfo } from "~/api/getEmployeeRentsInfo";
 import EmployeeReturnCard from "~/components/EmployeeReturnCard";
+import { Loader2 } from "lucide-react";
 
 const EmployeeDashboard = () => {
   const router = useRouter();
@@ -17,6 +18,7 @@ const EmployeeDashboard = () => {
     useQuery({
       queryKey: [REACT_QUERY_EMPLOYEE_INFO_KEY],
       queryFn: getEmployeeInfo,
+      retry: false,
     });
 
   const { data } = useQuery({
@@ -25,7 +27,11 @@ const EmployeeDashboard = () => {
   });
 
   if (isEmployeeInfoLoading) {
-    return <div>loading employee info</div>;
+    return (
+      <div className="flex w-full items-center justify-center py-5">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
   }
 
   if (isEmployeeInfoError) {
