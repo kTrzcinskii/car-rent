@@ -20,6 +20,7 @@ public class CarFromProviderDto
             ModelName = carRentalExternalProviderCarDto.Model,
             Localization = carRentalExternalProviderCarDto.Localization,
             ProductionYear = carRentalExternalProviderCarDto.ProductionYear,
+            ImageUrl = carRentalExternalProviderCarDto.ImageUrl
         };
     }
 }

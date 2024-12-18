@@ -263,6 +263,18 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20
+                },
+                // TODO: remove this, only for testing imageUrl
+                new Car
+                {
+                    Brand = "Nissan",
+                    Model = "Juke",
+                    ProductionYear = 2024,
+                    Status = CarStatus.Available,
+                    Location = "Olsztyn",
+                    CostPerDay = 200,
+                    InsuranceCostPerDay = 300,
+                    ImageUrl = "https://madmobil.pl/wp-content/uploads/2018/07/426220253_Nissan_Juke_z_roku_modelowego_2018_-_personalizacja_nadwozia_w_kolorze.jpg"
                 }
             };
 

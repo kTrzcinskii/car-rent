@@ -9,6 +9,7 @@ namespace AppRental.DTO
         public int ProductionYear { get; set; }
         public required string Localization { get; set; }
         public int Id { get; set; }
+        public string? ImageUrl { get; set; }
 
         public static CarDTO FromCar(Car car)
         {
@@ -18,7 +19,8 @@ namespace AppRental.DTO
                 Model = car.Model,
                 ProductionYear = car.ProductionYear,
                 Id = car.Id,
-                Localization = car.Location
+                Localization = car.Location,
+                ImageUrl = car.ImageUrl
             };
             return carDto;
         }

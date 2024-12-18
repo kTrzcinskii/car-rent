@@ -12,6 +12,7 @@ namespace AppRental.DTO
         public required string Localization { get; set; }
         public decimal CostPerDay { get; set; }
         public decimal InsuranceCostPerDay { get; set; }
+        public string? ImageUrl { get; set; }
         public DateTime StartDate { get; set; }
 
         public static CarDetailsWorkerDTO FromCar(Car car, Rent rent)
@@ -26,6 +27,7 @@ namespace AppRental.DTO
                 Localization = car.Location,
                 CostPerDay = car.CostPerDay,
                 InsuranceCostPerDay = car.InsuranceCostPerDay,
+                ImageUrl = car.ImageUrl,
                 StartDate = rent.StartDate
             };
             return carDetailsWorkerDto;
