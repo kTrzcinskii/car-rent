@@ -31,18 +31,15 @@ jobs:
 
       - name: Modify jsons with secrets
         run: |
-          jq '.AllowedOrigins = [env.URL_BROWSER] | .CarRentalBaseAPIUrl = URL_RENTAL' 
-          ./backend/AppBrowser/appsettings.Development.json > tmp.json && 
-          mv tmp.json ./backend/AppBrowser/appsettings.Development.json &&
-          
-          jq '.Jwt.Secret = [env.SECRET]' 
+          jq '.AllowedOrigins = [env.URL_FRONTEND] | .CarRentalBaseAPIUrl = URL_RENTAL' 
           ./backend/AppBrowser/appsettings.json > tmp.json && 
           mv tmp.json ./backend/AppBrowser/appsettings.json &&
           
-          jq '.profiles.http.applicationUrl = env.URL_BROWSER' 
-          ./backend/AppBrowser/Properties/launchSettings.json > tmp.json && 
-          mv tmp.json ./backend/AppBrowser/Properties/launchSettings.json
+          jq '.Jwt.Secret = env.SECRET | .Jwt.Issuer = URL_BROWSER | .Jwt.Audience = URL_BROWSER' 
+          ./backend/AppBrowser/appsettings.json > tmp.json && 
+          mv tmp.json ./backend/AppBrowser/appsettings.json
         env:
+            URL_FRONTEND = ${{ secrets.frontendUrl }}
             URL_BROWSER = ${{ secrets.backendBrowserUrl }}
             URL_RENTAL = ${{ secrets.backendRentalUrl }}
             SECRET = ${{ secrets.backendBrowserSecret }}

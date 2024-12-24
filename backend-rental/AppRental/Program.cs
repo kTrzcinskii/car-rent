@@ -88,13 +88,17 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(
-    opt => opt.UseLazyLoadingProxies().UseNpgsql(builder.Configuration["ConnectionStrings:Database"]));
+var connectionString = Environment.GetEnvironmentVariable("DB_CONN_STRING");
 
-builder.Services.AddAzureClients(azureBuilder =>
-{
-    azureBuilder.AddBlobServiceClient(builder.Configuration["AzureBlob:ConnectionString"]);
-});
+connectionString ??= builder.Configuration.GetConnectionString("Database");
+
+builder.Services.AddDbContext<DataContext>(opt => opt.UseLazyLoadingProxies().UseNpgsql(connectionString));
+
+var azureBlobString = Environment.GetEnvironmentVariable("AZUREBLOB_CONN_STRING");
+
+azureBlobString ??= builder.Configuration["AzureBlob:ConnectionString"];
+
+builder.Services.AddAzureClients(azureBuilder => azureBuilder.AddBlobServiceClient(azureBlobString));
 
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IEmailService, EmailService>();

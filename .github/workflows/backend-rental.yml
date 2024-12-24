@@ -29,14 +29,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Modify Development json with secrets
+      - name: Modify appsettings.json with secrets
         run: |
-          jq '.Jwt.Issuer = env.URL | .Jwt.Audience = env.URL | .Jwt.Secret = env.SECRET'
-          ./backend-rental/AppRental/appsettings.Development.json > tmp.json &&
-          mv tmp.json ./backend-rental/AppRental/appsettings.Development.json
+          jq '.Jwt.Secret = env.JWT_SECRET | .Jwt.Issuer = env.URL_RENTAL | .Jwt.Audience = env.URL_RENTAL'
+          ./backend-rental/AppRental/appsettings.json > tmp.json &&
+          mv tmp.json ./backend-rental/AppRental/appsettings.json &&
+
+          jq '.SendGrid.ApiKey = env.SENDGRID_APIKEY'
+          ./backend-rental/AppRental/appsettings.json > tmp.json &&
+          mv tmp.json ./backend-rental/AppRental/appsettings.json &&
+
+          jq '.AllowedOrigins = [env.URL_FRONTEND]'
+          ./backend-rental/AppRental/appsettings.json > tmp.json &&
+          mv tmp.json ./backend-rental/AppRental/appsettings.json
         env:
-            URL = ${{ secrets.backendRentalUrl }}
-            SECRET = ${{ secrets.backendRentalSecret }}
+            URL_RENTAL = ${{ secrets.backendRentalUrl }}
+            URL_FRONTEND = ${{ secrets.frontendUrl }}
+            JWT_SECRET = ${{ secrets.backendRentalJwtSecret }}
+            SENDGRID_APIKEY = ${{ secret.backendRentalApiKey }}
+
 
       - name: Build
         run: dotnet build ./backend-rental --configuration Release
