@@ -20,7 +20,7 @@ builder.Services.AddScoped<CarRentalExternalProviderService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IRentService, RentService>();
 
-var connectionString = Environment.GetEnvironmentVariable("POSTGRESQLCONNSTR_DB_CONN_STRING");
+var connectionString = Environment.GetEnvironmentVariable("DB_CONN_STRING");
 
 connectionString ??= builder.Configuration.GetConnectionString("Database");
 
