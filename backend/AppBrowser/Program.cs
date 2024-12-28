@@ -20,8 +20,11 @@ builder.Services.AddScoped<CarRentalExternalProviderService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IRentService, RentService>();
 
-builder.Services.AddDbContext<DataContext>(
-    opt => opt.UseLazyLoadingProxies().UseNpgsql(builder.Configuration.GetConnectionString("Database")));
+var connectionString = Environment.GetEnvironmentVariable("DB_CONN_STRING");
+
+connectionString ??= builder.Configuration.GetConnectionString("Database");
+
+builder.Services.AddDbContext<DataContext>(opt => opt.UseLazyLoadingProxies().UseNpgsql(connectionString));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
