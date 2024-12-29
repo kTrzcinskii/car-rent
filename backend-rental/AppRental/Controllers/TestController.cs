@@ -1,5 +1,9 @@
 using AppRental.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace AppRental.Controllers
 {
@@ -8,9 +12,11 @@ namespace AppRental.Controllers
     public class TestController : ControllerBase
     {
         private readonly DataContext _context;
-        public TestController(DataContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+        public TestController(DataContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         [HttpGet]
         public async Task<IActionResult> TestDatabaseConnection()

@@ -1,17 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "~/components/ui/button";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+    <main className="flex min-h-[calc(100vh-66px)] flex-col items-center justify-center">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Car Rent Frontend demo
-        </h1>
-        <Button variant="outline" onClick={() => alert("OnClick action")}>
-          This is custom button from shadcn
-        </Button>
+        <div>
+          <h1 className="text-4xl font-extrabold tracking-tight md:text-7xl">
+            Car Rent Browser
+          </h1>
+          <h4 className="text-xl tracking-tight md:text-3xl">
+            Find your perfect car with us!
+          </h4>
+        </div>
+        <Link href="/browse">
+          <Button>Browse cars</Button>
+        </Link>
       </div>
     </main>
   );

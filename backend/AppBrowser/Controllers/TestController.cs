@@ -1,3 +1,5 @@
+using AppBrowser.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppBrowser.Controllers
@@ -22,6 +24,13 @@ namespace AppBrowser.Controllers
             {
                 return StatusCode(500, "Connection to the database failed.");
             }
+        }
+        
+        [HttpGet("auth")]
+        [Authorize]
+        public async Task<IActionResult> TestAuthorization()
+        {
+            return Ok(new { Successful = true });
         }
     }
 }
