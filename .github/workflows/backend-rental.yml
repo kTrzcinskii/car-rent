@@ -46,7 +46,7 @@ jobs:
             URL_RENTAL = ${{ secrets.backendRentalUrl }}
             URL_FRONTEND = ${{ secrets.frontendUrl }}
             JWT_SECRET = ${{ secrets.backendRentalJwtSecret }}
-            SENDGRID_APIKEY = ${{ secret.backendRentalApiKey }}
+            SENDGRID_APIKEY = ${{ secrets.backendRentalApiKey }}
 
 
       - name: Build

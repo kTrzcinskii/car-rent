@@ -42,7 +42,7 @@ jobs:
             URL_FRONTEND = ${{ secrets.frontendUrl }}
             URL_BROWSER = ${{ secrets.backendBrowserUrl }}
             URL_RENTAL = ${{ secrets.backendRentalUrl }}
-            SECRET = ${{ secrets.backendBrowserSecret }}
+            SECRET = ${{ secrets.backendBrowserJwtSecret }}
 
       - name: Build
         run: dotnet build ./backend --configuration Release
