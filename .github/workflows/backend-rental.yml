@@ -43,10 +43,10 @@ jobs:
           ./backend-rental/AppRental/appsettings.json > tmp.json &&
           mv tmp.json ./backend-rental/AppRental/appsettings.json
         env:
-            URL_RENTAL = ${{ secrets.backendRentalUrl }}
-            URL_FRONTEND = ${{ secrets.frontendUrl }}
-            JWT_SECRET = ${{ secrets.backendRentalJwtSecret }}
-            SENDGRID_APIKEY = ${{ secrets.backendRentalApiKey }}
+            URL_RENTAL: ${{ secrets.backendRentalUrl }}
+            URL_FRONTEND: ${{ secrets.frontendUrl }}
+            JWT_SECRET: ${{ secrets.backendRentalJwtSecret }}
+            SENDGRID_APIKEY: ${{ secrets.backendRentalApiKey }}
 
 
       - name: Build
