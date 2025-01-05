@@ -31,6 +31,8 @@ jobs:
 
       - name: Modify appsettings.json with secrets
         run: |
+          chmod +w ./backend-rental/AppRental/appsettings.json
+
           jq '.Jwt.Secret = env.JWT_SECRET | .Jwt.Issuer = env.URL_RENTAL | .Jwt.Audience = env.URL_RENTAL'
           ./backend-rental/AppRental/appsettings.json > tmp.json &&
           mv tmp.json ./backend-rental/AppRental/appsettings.json &&
