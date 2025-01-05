@@ -31,7 +31,9 @@ jobs:
 
       - name: Modify jsons with secrets
         run: |
-          jq '.AllowedOrigins = [env.URL_FRONTEND] | .CarRentalBaseAPIUrl = URL_RENTAL' 
+          chmod +w ./backend/AppBrowser/appsettings.json
+
+          jq '.AllowedOrigins = [env.URL_FRONTEND] | .CarRentalBaseAPIUrl = env.URL_RENTAL' 
           ./backend/AppBrowser/appsettings.json > tmp.json && 
           mv tmp.json ./backend/AppBrowser/appsettings.json &&
           
