@@ -37,7 +37,7 @@ jobs:
           ./backend/AppBrowser/appsettings.json > tmp.json && 
           mv tmp.json ./backend/AppBrowser/appsettings.json &&
           
-          jq '.Jwt.Secret = env.SECRET | .Jwt.Issuer = URL_BROWSER | .Jwt.Audience = URL_BROWSER' 
+          jq '.Jwt.Secret = env.SECRET | .Jwt.Issuer = env.URL_BROWSER | .Jwt.Audience = env.URL_BROWSER' 
           ./backend/AppBrowser/appsettings.json > tmp.json && 
           mv tmp.json ./backend/AppBrowser/appsettings.json
         env:
