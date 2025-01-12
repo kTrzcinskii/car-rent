@@ -31,17 +31,20 @@ jobs:
 
       - name: Modify jsons with secrets
         run: |
-          jq '.AllowedOrigins = [env.URL_FRONTEND] | .CarRentalBaseAPIUrl = URL_RENTAL' 
+          chmod +w ./backend/AppBrowser/appsettings.json
+
+          jq '.AllowedOrigins = [env.URL_FRONTEND] | .CarRentalBaseAPIUrl = env.URL_RENTAL' \
           ./backend/AppBrowser/appsettings.json > tmp.json && 
           mv tmp.json ./backend/AppBrowser/appsettings.json &&
 
-          jq '.Jwt.Secret = env.SECRET | .Jwt.Issuer = URL_BROWSER | .Jwt.Audience = URL_BROWSER' 
+          jq '.Jwt.Secret = env.SECRET | .Jwt.Issuer = env.URL_BROWSER | .Jwt.Audience = env.URL_BROWSER' \
           ./backend/AppBrowser/appsettings.json > tmp.json && 
           mv tmp.json ./backend/AppBrowser/appsettings.json
-        env: URL_FRONTEND = ${{ secrets.frontendUrl }}
-          URL_BROWSER = ${{ secrets.backendBrowserUrl }}
-          URL_RENTAL = ${{ secrets.backendRentalUrl }}
-          SECRET = ${{ secrets.backendBrowserSecret }}
+        env:
+          URL_FRONTEND: ${{ secrets.frontendUrl }}
+          URL_BROWSER: ${{ secrets.backendBrowserUrl }}
+          URL_RENTAL: ${{ secrets.backendRentalUrl }}
+          SECRET: ${{ secrets.backendBrowserJwtSecret }}
 
       - name: Build
         run: dotnet build ./backend --configuration Release
