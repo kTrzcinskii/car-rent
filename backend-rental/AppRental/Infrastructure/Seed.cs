@@ -33,7 +33,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 89,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Octavia-2013-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Skoda-Octavia-2013-thb.jpg"
                 },
                 new Car
                 {
@@ -44,7 +44,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 95,
                     InsuranceCostPerDay = 25,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Octavia-2017-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Skoda-Octavia-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -55,7 +55,7 @@ namespace AppRental.Infrastructure
                     Location = "Krakow",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 30,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Octavia-2017-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Skoda-Octavia-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -66,7 +66,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 85,
                     InsuranceCostPerDay = 25,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -77,7 +77,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 85,
                     InsuranceCostPerDay = 25,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -88,7 +88,7 @@ namespace AppRental.Infrastructure
                     Location = "Krakow",
                     CostPerDay = 85,
                     InsuranceCostPerDay = 25,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -99,7 +99,7 @@ namespace AppRental.Infrastructure
                     Location = "Krakow",
                     CostPerDay = 85,
                     InsuranceCostPerDay = 25,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Skoda-Superb-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -110,7 +110,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 75,
                     InsuranceCostPerDay = 10,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-Camry-2012-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Toyota-Camry-2012-thb.jpg"
                 },
                 new Car
                 {
@@ -121,7 +121,7 @@ namespace AppRental.Infrastructure
                     Location = "Krakow",
                     CostPerDay = 69,
                     InsuranceCostPerDay = 10,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-Yaris-2017-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Toyota-Yaris-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -132,7 +132,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 109,
                     InsuranceCostPerDay = 30,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-RAV4_Hybrid_EU-Version-2016-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Toyota-RAV4_Hybrid_EU-Version-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -143,7 +143,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 65,
                     InsuranceCostPerDay = 15,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Hyundai-i20-2013-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Hyundai-i20-2013-thb.jpg"
                 },
                 new Car
                 {
@@ -154,7 +154,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 70,
                     InsuranceCostPerDay = 15,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Hyundai-i20-2015-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Hyundai-i20-2015-thb.jpg"
                 },
                 new Car
                 {
@@ -165,7 +165,7 @@ namespace AppRental.Infrastructure
                     Location = "Warsaw",
                     CostPerDay = 80,
                     InsuranceCostPerDay = 15,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Hyundai-i20-2021-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Hyundai-i20-2021-thb.jpg"
                 },
                 new Car
                 {
@@ -176,7 +176,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-Corolla_EU-Version-2014-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Toyota-Corolla_EU-Version-2014-thb.jpg"
                 },
                 new Car
                 {
@@ -187,7 +187,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Ford-F-Series_Super_Duty-2017-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Ford-F-Series_Super_Duty-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -198,7 +198,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Honda-Civic_Sedan-2016-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Honda-Civic_Sedan-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -209,7 +209,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Volkswagen-Tiguan-2017-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Volkswagen-Tiguan-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -220,7 +220,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Volkswagen-Golf-2017-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Volkswagen-Golf-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -231,7 +231,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Honda-CR-V-2017-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Honda-CR-V-2017-thb.jpg"
                 },
                 new Car
                 {
@@ -242,7 +242,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Volkswagen-Polo-2018-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Volkswagen-Polo-2018-thb.jpg"
                 },
                 new Car
                 {
@@ -253,7 +253,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Toyota-Camry-2018-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Toyota-Camry-2018-thb.jpg"
                 },
                 new Car
                 {
@@ -264,7 +264,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Chevrolet-Silverado-2016-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Chevrolet-Silverado-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -275,7 +275,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Opel-Astra-2016-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Opel-Astra-2016-thb.jpg"
                 },
                 new Car
                 {
@@ -286,7 +286,7 @@ namespace AppRental.Infrastructure
                     Location = "Szczecin",
                     CostPerDay = 99,
                     InsuranceCostPerDay = 20,
-                    ImageUrl = "https://carrentalpublicapiblob.blob.core.windows.net/cars/Mazda-3-2017-thb.jpg"
+                    ImageUrl = "https://carrentalblock.blob.core.windows.net/cars/Mazda-3-2017-thb.jpg"
                 }
             };
 
