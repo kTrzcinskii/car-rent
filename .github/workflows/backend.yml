@@ -34,15 +34,14 @@ jobs:
           jq '.AllowedOrigins = [env.URL_FRONTEND] | .CarRentalBaseAPIUrl = URL_RENTAL' 
           ./backend/AppBrowser/appsettings.json > tmp.json && 
           mv tmp.json ./backend/AppBrowser/appsettings.json &&
-          
+
           jq '.Jwt.Secret = env.SECRET | .Jwt.Issuer = URL_BROWSER | .Jwt.Audience = URL_BROWSER' 
           ./backend/AppBrowser/appsettings.json > tmp.json && 
           mv tmp.json ./backend/AppBrowser/appsettings.json
-        env:
-            URL_FRONTEND = ${{ secrets.frontendUrl }}
-            URL_BROWSER = ${{ secrets.backendBrowserUrl }}
-            URL_RENTAL = ${{ secrets.backendRentalUrl }}
-            SECRET = ${{ secrets.backendBrowserSecret }}
+        env: URL_FRONTEND = ${{ secrets.frontendUrl }}
+          URL_BROWSER = ${{ secrets.backendBrowserUrl }}
+          URL_RENTAL = ${{ secrets.backendRentalUrl }}
+          SECRET = ${{ secrets.backendBrowserSecret }}
 
       - name: Build
         run: dotnet build ./backend --configuration Release
@@ -89,6 +88,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: "CarRentalBackend"
+          app-name: "car-rental-backend"
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}

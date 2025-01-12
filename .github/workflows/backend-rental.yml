@@ -42,12 +42,10 @@ jobs:
           jq '.AllowedOrigins = [env.URL_FRONTEND]'
           ./backend-rental/AppRental/appsettings.json > tmp.json &&
           mv tmp.json ./backend-rental/AppRental/appsettings.json
-        env:
-            URL_RENTAL = ${{ secrets.backendRentalUrl }}
-            URL_FRONTEND = ${{ secrets.frontendUrl }}
-            JWT_SECRET = ${{ secrets.backendRentalJwtSecret }}
-            SENDGRID_APIKEY = ${{ secret.backendRentalApiKey }}
-
+        env: URL_RENTAL = ${{ secrets.backendRentalUrl }}
+          URL_FRONTEND = ${{ secrets.frontendUrl }}
+          JWT_SECRET = ${{ secrets.backendRentalJwtSecret }}
+          SENDGRID_APIKEY = ${{ secret.backendRentalApiKey }}
 
       - name: Build
         run: dotnet build ./backend-rental --configuration Release
@@ -94,6 +92,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: "CarRentalPublicAPI"
+          app-name: "car-rental-public-api-2"
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_API_PUBLIC_PUBLISHPROFILE }}
