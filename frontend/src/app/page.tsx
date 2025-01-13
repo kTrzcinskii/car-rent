@@ -16,7 +16,7 @@ export default function HomePage() {
           </h4>
         </div>
         <Link href="/browse">
-          <Button>Browse cars</Button>
+          <Button data-testid="browse-cars-button">Browse cars</Button>
         </Link>
       </div>
     </main>
