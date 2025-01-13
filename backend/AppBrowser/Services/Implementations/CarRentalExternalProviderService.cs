@@ -36,7 +36,9 @@ public class CarRentalExternalProviderService : IExternalProviderService
     public async Task<List<Car>> SearchCars(string brandName, string modelName)
     {
         string url = $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")!}/api/cars";
-        var response = await _httpClient.GetAsync(url);
+        var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+        requestMessage.Headers.Add("x-api-key", _configuration.GetValue<string>("CarRentalAPIKey"));
+        var response = await _httpClient.SendAsync(requestMessage);
         
         if (!response.IsSuccessStatusCode) throw new HttpRequestException("Cannot fetch cars from car rental API");
         
@@ -117,8 +119,13 @@ public class CarRentalExternalProviderService : IExternalProviderService
         string url = $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/offer";
         var json = JsonSerializer.Serialize(createOfferDto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var requestMessage = new HttpRequestMessage(HttpMethod.Post, url)
+        {
+            Content = content
+        };
+        requestMessage.Headers.Add("x-api-key", _configuration.GetValue<string>("CarRentalAPIKey"));
+        var response = await _httpClient.SendAsync(requestMessage);
         
-        var response = await _httpClient.PostAsync(url, content);
         _logger.LogInformation("Response status code: {}", response.StatusCode);
         
         if (!response.IsSuccessStatusCode) throw new HttpRequestException("Couldnt get offer from external provider");
@@ -139,7 +146,12 @@ public class CarRentalExternalProviderService : IExternalProviderService
             $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/rent/create-rent?offerId={offerId}";
         var json = JsonSerializer.Serialize(createRentDto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync(url, content);
+        var requestMessage = new HttpRequestMessage(HttpMethod.Post, url)
+        {
+            Content = content
+        };
+        requestMessage.Headers.Add("x-api-key", _configuration.GetValue<string>("CarRentalAPIKey"));
+        var response = await _httpClient.SendAsync(requestMessage);
         if (!response.IsSuccessStatusCode)
             throw new HttpRequestException("Couldn't create rent using external provider");
         json = await response.Content.ReadAsStringAsync();
@@ -156,7 +168,9 @@ public class CarRentalExternalProviderService : IExternalProviderService
     {
         string url =
             $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/rent/status?rentId={rentId}";
-        var response = await _httpClient.GetAsync(url);
+        var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+        requestMessage.Headers.Add("x-api-key", _configuration.GetValue<string>("CarRentalAPIKey"));
+        var response = await _httpClient.SendAsync(requestMessage);
         if (!response.IsSuccessStatusCode)
             throw new HttpRequestException("Couldn't get rent status");
         var json = await response.Content.ReadAsStreamAsync();
@@ -174,7 +188,9 @@ public class CarRentalExternalProviderService : IExternalProviderService
     {
         string url =
             $"{_configuration.GetValue<string>("CarRentalBaseAPIUrl")}/api/rent/start-return?rentId={rentId}";
-        var response = await _httpClient.PutAsync(url, null);
+        var requestMessage = new HttpRequestMessage(HttpMethod.Put, url);
+        requestMessage.Headers.Add("x-api-key", _configuration.GetValue<string>("CarRentalAPIKey"));
+        var response = await _httpClient.SendAsync(requestMessage);
         if (!response.IsSuccessStatusCode)
             throw new HttpRequestException("Couldn't start rent return");
     }
