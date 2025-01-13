@@ -65,6 +65,7 @@ const CarsSearchResult = (props: ICarsSearchResultProps) => {
                   ? undefined
                   : "pointer-events-none opacity-50"
               }
+              data-testid="browse-pagination-previous"
             />
           </PaginationItem>
           <PaginationItem>
@@ -77,6 +78,7 @@ const CarsSearchResult = (props: ICarsSearchResultProps) => {
                   ? undefined
                   : "pointer-events-none opacity-50"
               }
+              data-testid="browse-pagination-next"
             />
           </PaginationItem>
         </PaginationContent>

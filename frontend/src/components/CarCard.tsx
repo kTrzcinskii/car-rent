@@ -36,7 +36,10 @@ const CarCard = ({
             src={imageUrl ?? "/placeholder.svg"}
             className="h-[200px] object-contain"
           />
-          <CardHeader className="text-2xl font-semibold">
+          <CardHeader
+            className="text-2xl font-semibold"
+            data-testid="car-card-header"
+          >
             {brandName} {modelName}
           </CardHeader>
           <CardContent>
