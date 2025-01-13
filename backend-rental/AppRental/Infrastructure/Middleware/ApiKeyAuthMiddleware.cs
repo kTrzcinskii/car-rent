@@ -13,6 +13,14 @@ namespace AppRental.Infrastructure.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
+            var excludedPaths = new[] { "/api/rent/confirm-rent" };
+
+            if (excludedPaths.Contains(context.Request.Path.Value))
+            {
+                await _next(context);
+                return;
+            }
+            
             if(!context.Request.Headers.TryGetValue("x-api-key", out var extractedApiKey))
             {
                 context.Response.StatusCode = 401;
