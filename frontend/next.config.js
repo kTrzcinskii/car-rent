@@ -11,9 +11,12 @@ const config = {
   images: {
     remotePatterns: [
       {
-        hostname: "carrentalpublicapiblob.blob.core.windows.net",
+        hostname: "carrentalblock.blob.core.windows.net",
       },
     ],
+  },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
   },
 };
 

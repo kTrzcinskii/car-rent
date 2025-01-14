@@ -37,7 +37,7 @@ jobs:
           ./backend-rental/AppRental/appsettings.json > tmp.json &&
           mv tmp.json ./backend-rental/AppRental/appsettings.json &&
 
-          jq '.SendGrid.ApiKey = env.SENDGRID_APIKEY' \
+          jq '.SendGrid.ApiKey = env.SENDGRID_APIKEY | .Auth.ApiKey0 = env.AUTH_APIKEY_0' \
           ./backend-rental/AppRental/appsettings.json > tmp.json &&
           mv tmp.json ./backend-rental/AppRental/appsettings.json &&
 
@@ -49,6 +49,7 @@ jobs:
           URL_FRONTEND: ${{ secrets.frontendUrl }}
           JWT_SECRET: ${{ secrets.backendRentalJwtSecret }}
           SENDGRID_APIKEY: ${{ secrets.backendRentalApiKey }}
+          AUTH_APIKEY_0: ${{ secrets.authApiKey0 }}
 
       - name: Build
         run: dotnet build ./backend-rental --configuration Release

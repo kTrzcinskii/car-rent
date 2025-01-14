@@ -69,7 +69,7 @@ const SearchCarsForm = (props: ISearchCarsFromProps) => {
             <FormItem>
               <FormLabel>Brand name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input data-testid="brand-name-search-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -82,13 +82,13 @@ const SearchCarsForm = (props: ISearchCarsFromProps) => {
             <FormItem>
               <FormLabel>Model name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input data-testid="model-name-search-input" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">
+        <Button type="submit" data-testid="search-cars-button">
           <Search className="mr-2 h-4 w-4" />
           Search
         </Button>
