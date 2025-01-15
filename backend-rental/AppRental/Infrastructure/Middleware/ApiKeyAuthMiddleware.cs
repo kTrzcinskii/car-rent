@@ -13,7 +13,10 @@ namespace AppRental.Infrastructure.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var excludedPaths = new[] { "/api/rent/confirm-rent" };
+            var excludedPaths = new[] { "/api/rent/confirm-rent", 
+                                        "/api/account/login", "/api/account/info", 
+                                        "/api/cars/worker", "/api/cars/worker/details",
+                                        "/api/rent/worker/confirm-return" };
 
             if (excludedPaths.Contains(context.Request.Path.Value))
             {
