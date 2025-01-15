@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  EMPLOYEE_API_BASE_URL,
-  EMPLOYEE_TOKEN_KEY,
-  EMPLOYEE_API_KEY,
-} from "~/lib/consts";
+import { EMPLOYEE_API_BASE_URL, EMPLOYEE_TOKEN_KEY } from "~/lib/consts";
 
 export interface IEmployeeConfirmReturnProps {
   rentId: number;
@@ -29,7 +25,6 @@ export const employeeConfirmReturn = async (
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
-      "x-api-key": EMPLOYEE_API_KEY,
     },
   });
 };
