@@ -106,7 +106,7 @@ public class RentController : ControllerBase
         var rent = await _rentService.GetByIdAsync(rentId);
 
         if(rent == null) return NotFound();
-        if(rent.Status != RentStatus.Returned) return BadRequest();
+        if(rent.Status != RentStatus.Returned) return BadRequest("Rent status is not returned.");
 
         await _rentService.ConfirmReturnAsync(rent, workerId);
         await _photoService.AddPhotosToAzureAsync(rent, photos);

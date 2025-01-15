@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  EMPLOYEE_API_BASE_URL,
-  EMPLOYEE_TOKEN_KEY,
-  EMPLOYEE_API_KEY,
-} from "~/lib/consts";
+import { EMPLOYEE_API_BASE_URL, EMPLOYEE_TOKEN_KEY } from "~/lib/consts";
 import { type IEmployeeInfoResponse } from "../responses/IEmployeeInfoResponse";
 
 export const getEmployeeInfo = async () => {
@@ -12,7 +8,6 @@ export const getEmployeeInfo = async () => {
   const response = await axios.get<IEmployeeInfoResponse>(url, {
     headers: {
       Authorization: `Bearer ${token}`,
-      "x-api-key": EMPLOYEE_API_KEY,
     },
   });
   return response.data;
